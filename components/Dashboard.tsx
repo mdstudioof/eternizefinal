@@ -372,7 +372,7 @@ const Dashboard: React.FC<DashboardProps> = ({
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative pb-6">
-          <div className="flex flex-col md:flex-row items-end -mt-16 md:-mt-12 gap-6">
+          <div className="flex flex-col items-center -mt-16 gap-4 pt-2">
 
             {/* Avatar Image */}
             <div className="relative group cursor-pointer z-20">
@@ -387,15 +387,15 @@ const Dashboard: React.FC<DashboardProps> = ({
               </div>
             </div>
 
-            {/* User Info */}
-            <div className="flex-1 mb-2 text-center md:text-left">
+            {/* User Info — centralizado */}
+            <div className="text-center">
               <h1 className="text-3xl font-bold text-slate-900">{user?.name}</h1>
               <p className="text-slate-500 font-medium">{user?.email}</p>
             </div>
 
             {/* Actions */}
-            <div className="w-full md:w-auto flex flex-col sm:flex-row gap-3 mb-2">
-              <button onClick={onCreateClick} className="px-6 py-2.5 bg-brand-600 text-white rounded-lg font-medium hover:bg-brand-700 transition-colors shadow-lg shadow-brand-200 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
+            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm">
+              <button onClick={onCreateClick} className="flex-1 px-6 py-2.5 bg-brand-600 text-white rounded-lg font-medium hover:bg-brand-700 transition-colors shadow-lg shadow-brand-200 flex items-center justify-center gap-2 transform hover:-translate-y-0.5">
                 <Plus size={18} /> Novo Memorial
               </button>
 
@@ -522,8 +522,8 @@ const Dashboard: React.FC<DashboardProps> = ({
                         onClick={() => onViewMemorial(memorial.id)}
                         disabled={!isApproved}
                         className={`flex-1 py-2.5 rounded-xl font-bold transition-all text-sm shadow-md flex items-center justify-center gap-1.5 ${isApproved
-                            ? 'bg-brand-600 text-white hover:bg-brand-700 shadow-brand-200 hover:-translate-y-0.5'
-                            : 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
+                          ? 'bg-brand-600 text-white hover:bg-brand-700 shadow-brand-200 hover:-translate-y-0.5'
+                          : 'bg-slate-100 text-slate-400 cursor-not-allowed shadow-none'
                           }`}
                         title={!isApproved ? "Aguardando confirmação do pagamento" : ""}
                       >
