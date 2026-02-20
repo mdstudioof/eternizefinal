@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Testimonials from './components/Testimonials';
 import Features from './components/Features';
 import ValueProposition from './components/ValueProposition';
 import FeaturedMemorials from './components/FeaturedMemorials';
@@ -98,11 +99,11 @@ const AppContent: React.FC = () => {
   if (currentView === 'admin') {
     // Double check security on render
     if (user?.email !== 'admin@eternize.com.br') {
-       setCurrentView('home');
-       return null;
+      setCurrentView('home');
+      return null;
     }
     return (
-      <AdminDashboard 
+      <AdminDashboard
         onLogout={() => {
           logout();
           setCurrentView('home');
@@ -115,8 +116,8 @@ const AppContent: React.FC = () => {
   return (
     <div className="min-h-screen bg-slate-50 selection:bg-brand-500 selection:text-white">
       {currentView !== 'view_memorial' && (
-        <Navbar 
-          onOpenCreateModal={handleCreateClick} 
+        <Navbar
+          onOpenCreateModal={handleCreateClick}
           onOpenLoginModal={() => setIsLoginModalOpen(true)}
           onOpenDashboard={handleDashboardClick}
           onOpenExplore={handleExploreClick}
@@ -125,28 +126,28 @@ const AppContent: React.FC = () => {
           onLogout={handleLogout}
         />
       )}
-      
+
       <main>
         {currentView === 'create' && (
-          <CreateMemorialPage 
-            onCancel={() => setCurrentView('dashboard')} 
+          <CreateMemorialPage
+            onCancel={() => setCurrentView('dashboard')}
             memorialId={selectedMemorialId}
           />
         )}
 
         {currentView === 'view_memorial' && selectedMemorialId && (
-          <MemorialViewPage 
+          <MemorialViewPage
             memorialId={selectedMemorialId}
             onBack={() => {
-                if (isAuthenticated) setCurrentView('dashboard');
-                else setCurrentView('explore');
+              if (isAuthenticated) setCurrentView('dashboard');
+              else setCurrentView('explore');
             }}
           />
         )}
 
         {currentView === 'dashboard' && (
-          <Dashboard 
-            onCreateClick={handleCreateClick} 
+          <Dashboard
+            onCreateClick={handleCreateClick}
             onEditMemorial={handleEditMemorial}
             onViewMemorial={handleViewMemorial}
             onDeleteAccountSuccess={() => {
@@ -157,14 +158,14 @@ const AppContent: React.FC = () => {
         )}
 
         {currentView === 'explore' && (
-          <ExplorePage 
+          <ExplorePage
             onViewMemorial={handleViewMemorial}
           />
         )}
 
         {currentView === 'home' && (
           <>
-            <Hero 
+            <Hero
               onOpenCreateModal={handleCreateClick}
               onOpenLoginModal={() => {
                 if (isAuthenticated) {
@@ -175,16 +176,18 @@ const AppContent: React.FC = () => {
               }}
               onViewDemo={handleViewDemo}
             />
-            
-            <FeaturedMemorials 
+
+            <Testimonials />
+
+            <FeaturedMemorials
               onViewMemorial={handleViewMemorial}
               onExploreClick={handleExploreClick}
             />
 
             <Features />
-            
+
             <ValueProposition onStartCreate={handleCreateClick} />
-            
+
             <footer className="bg-slate-900 text-white py-12 border-t border-slate-800">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div className="text-slate-400 text-sm">
@@ -205,7 +208,7 @@ const AppContent: React.FC = () => {
         )}
       </main>
 
-      <LoginModal 
+      <LoginModal
         isOpen={isLoginModalOpen}
         onClose={() => setIsLoginModalOpen(false)}
         onSuccess={handleLoginSuccess}
