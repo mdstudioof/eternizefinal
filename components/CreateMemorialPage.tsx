@@ -17,12 +17,14 @@ import {
   X,
   CheckCircle,
   Clock,
-  Calendar
+  Calendar,
+  GitBranch
 } from 'lucide-react';
-import { MemorialFormData, MediaItem, TimelineEvent } from '../types';
+import { MemorialFormData, MediaItem, TimelineEvent, FamilyTreeMember } from '../types';
 import { generateBiography } from '../services/geminiService';
 import { createMemorial, getMemorialFull, updateMemorial } from '../services/memorialService';
 import { useAuth } from '../context/AuthContext';
+import FamilyTreeEditor from './FamilyTreeEditor';
 
 interface CreateMemorialPageProps {
   onCancel: () => void;
@@ -62,6 +64,7 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
     isPublic: false,
     memories: '',
     timeline: [],
+    familyTree: [],
     coverImage: null,
     profileImage: null,
     gallery: [],
@@ -81,7 +84,7 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
     if (memorialId) {
       const loadData = async () => {
         setIsLoadingData(true);
-        const { memorial, timeline, media, error } = await getMemorialFull(memorialId);
+        const { memorial, timeline, media, familyTree, error } = await getMemorialFull(memorialId);
 
         if (error || !memorial) {
           alert("Erro ao carregar memorial para edição.");
@@ -119,6 +122,16 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
             year: t.year,
             title: t.title,
             description: t.description
+          })),
+          familyTree: (familyTree || []).map((f: any) => ({
+            id: f.id,
+            name: f.name,
+            role: f.role,
+            birthYear: f.birth_year || '',
+            deathYear: f.death_year || '',
+            notes: f.notes || '',
+            order: f.order || 0,
+            isExisting: true
           })),
           coverImage: memorial.cover_image_url,
           profileImage: memorial.profile_image_url,
@@ -573,8 +586,8 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
               <button
                 onClick={() => setFormData(prev => ({ ...prev, isPublic: !prev.isPublic }))}
                 className={`px-4 py-2 rounded-lg font-bold text-sm transition-all ${formData.isPublic
-                    ? 'bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-200'
-                    : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
+                  ? 'bg-green-600 text-white hover:bg-green-700 shadow-lg shadow-green-200'
+                  : 'bg-slate-200 text-slate-600 hover:bg-slate-300'
                   }`}
               >
                 {formData.isPublic ? 'Tornar Privado' : 'Tornar Público'}
@@ -689,7 +702,26 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
           </div>
         </div>
 
-        {/* Card 4: Media */}
+        {/* Card 4: Family Tree */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+            <div className="p-2 bg-violet-50 rounded-lg text-violet-600">
+              <GitBranch size={20} />
+            </div>
+            <div>
+              <h2 className="text-xl font-bold text-slate-900">Árvore Genealógica</h2>
+              <p className="text-xs text-slate-400 font-medium mt-0.5">Adicione familiares que fazem parte da história desta pessoa</p>
+            </div>
+          </div>
+
+          <FamilyTreeEditor
+            members={formData.familyTree}
+            onChange={(members) => setFormData(prev => ({ ...prev, familyTree: members }))}
+            honoredName={formData.name}
+          />
+        </div>
+
+        {/* Card 5: Media */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
             <div className="p-2 bg-blue-50 rounded-lg text-blue-600">

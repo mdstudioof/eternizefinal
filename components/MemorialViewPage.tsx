@@ -12,10 +12,11 @@ import {
   Loader2,
   Music,
   Lock,
-  AlertTriangle
+  AlertTriangle,
+  GitBranch
 } from 'lucide-react';
 import { getMemorialFull } from '../services/memorialService';
-import { Memorial, TimelineEvent, MediaItem } from '../types';
+import { Memorial, TimelineEvent, MediaItem, FamilyTreeMember, FamilyRole } from '../types';
 import { useAuth } from '../context/AuthContext';
 
 interface MemorialViewPageProps {
@@ -33,6 +34,7 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
   const [gallery, setGallery] = useState<MediaItem[]>([]);
   const [videos, setVideos] = useState<MediaItem[]>([]);
   const [audios, setAudios] = useState<MediaItem[]>([]);
+  const [familyTree, setFamilyTree] = useState<FamilyTreeMember[]>([]);
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [expandedTimelineIds, setExpandedTimelineIds] = useState<Set<string>>(new Set());
@@ -40,7 +42,7 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
   useEffect(() => {
     const loadMemorial = async () => {
       setLoading(true);
-      const { memorial, timeline, media, error } = await getMemorialFull(memorialId);
+      const { memorial, timeline, media, familyTree, error } = await getMemorialFull(memorialId);
 
       if (error || !memorial) {
         setError("Não foi possível carregar o memorial.");
@@ -76,6 +78,19 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
       setGallery(g);
       setVideos(v);
       setAudios(a);
+
+      // Load family tree
+      setFamilyTree((familyTree || []).map((f: any) => ({
+        id: f.id,
+        name: f.name,
+        role: f.role as FamilyRole,
+        birthYear: f.birth_year || undefined,
+        deathYear: f.death_year || undefined,
+        notes: f.notes || undefined,
+        order: f.order || 0,
+        isExisting: true
+      })));
+
       setLoading(false);
     };
 
@@ -282,6 +297,130 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {/* Family Tree */}
+        {familyTree.length > 0 && (
+          <div className="mb-16 animate-slide-up">
+            <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
+              <div className="p-2 bg-violet-100 rounded-lg text-violet-600"><GitBranch size={24} /></div>
+              Árvore Genealógica
+            </h3>
+
+            {/* Group by generation */}
+            {(() => {
+              const ROLE_GROUPS: Record<string, number> = {
+                'Avô': 0, 'Avó': 0, 'Tio(a)': 0,
+                'Pai': 1, 'Mãe': 1, 'Cônjuge': 1, 'Outro': 1,
+                'Irmão/Irmã': 2, 'Filho(a)': 2, 'Neto(a)': 2, 'Sobrinho(a)': 2
+              };
+              const ROLE_EMOJI: Record<string, string> = {
+                'Pai': '👨', 'Mãe': '👩', 'Cônjuge': '💑', 'Filho(a)': '👶',
+                'Irmão/Irmã': '🧑‍🤝‍🧑', 'Avô': '👴', 'Avó': '👵', 'Neto(a)': '🧒',
+                'Tio(a)': '🧑', 'Sobrinho(a)': '👦', 'Outro': '👤'
+              };
+              const ROLE_COLORS: Record<string, { bg: string; border: string; badge: string; text: string }> = {
+                'Avô': { bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700', text: 'text-amber-700' },
+                'Avó': { bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700', text: 'text-amber-700' },
+                'Tio(a)': { bg: 'bg-orange-50', border: 'border-orange-200', badge: 'bg-orange-100 text-orange-700', text: 'text-orange-700' },
+                'Pai': { bg: 'bg-violet-50', border: 'border-violet-200', badge: 'bg-violet-100 text-violet-700', text: 'text-violet-700' },
+                'Mãe': { bg: 'bg-violet-50', border: 'border-violet-200', badge: 'bg-violet-100 text-violet-700', text: 'text-violet-700' },
+                'Cônjuge': { bg: 'bg-pink-50', border: 'border-pink-200', badge: 'bg-pink-100 text-pink-700', text: 'text-pink-700' },
+                'Irmão/Irmã': { bg: 'bg-blue-50', border: 'border-blue-200', badge: 'bg-blue-100 text-blue-700', text: 'text-blue-700' },
+                'Filho(a)': { bg: 'bg-green-50', border: 'border-green-200', badge: 'bg-green-100 text-green-700', text: 'text-green-700' },
+                'Neto(a)': { bg: 'bg-teal-50', border: 'border-teal-200', badge: 'bg-teal-100 text-teal-700', text: 'text-teal-700' },
+                'Sobrinho(a)': { bg: 'bg-cyan-50', border: 'border-cyan-200', badge: 'bg-cyan-100 text-cyan-700', text: 'text-cyan-700' },
+                'Outro': { bg: 'bg-slate-50', border: 'border-slate-200', badge: 'bg-slate-100 text-slate-700', text: 'text-slate-700' },
+              };
+              const grouped: Record<number, FamilyTreeMember[]> = { 0: [], 1: [], 2: [] };
+              familyTree.forEach(m => {
+                const grp = ROLE_GROUPS[m.role] ?? 1;
+                grouped[grp].push(m);
+              });
+              const GROUP_LABELS: Record<number, string> = {
+                0: 'Geração Anterior',
+                1: 'Mesma Geração',
+                2: 'Próxima Geração',
+              };
+              return (
+                <div className="bg-gradient-to-br from-violet-50 to-slate-50 rounded-3xl p-6 md:p-8 border border-violet-100 space-y-8">
+                  {[0, 1, 2].map(grp => {
+                    const grpMembers = grouped[grp];
+                    if (grpMembers.length === 0) return null;
+                    return (
+                      <div key={grp}>
+                        <div className="flex items-center gap-3 mb-4">
+                          <span className="text-xs font-bold text-violet-400 uppercase tracking-widest"
+                          >{GROUP_LABELS[grp]}</span>
+                          <div className="flex-1 h-px bg-violet-100" />
+                        </div>
+                        <div className="flex flex-wrap gap-4">
+                          {grpMembers.map(member => {
+                            const cfg = ROLE_COLORS[member.role] ?? ROLE_COLORS['Outro'];
+                            const emoji = ROLE_EMOJI[member.role] ?? '👤';
+                            return (
+                              <div
+                                key={member.id}
+                                className={`flex flex-col items-center gap-2 p-4 rounded-2xl border-2 ${cfg.bg} ${cfg.border} min-w-[110px] max-w-[150px] text-center hover:shadow-lg transition-all hover:-translate-y-1 duration-200`}
+                              >
+                                <div className={`w-14 h-14 rounded-full ${cfg.bg} border-2 ${cfg.border} flex items-center justify-center text-3xl shadow-sm`}>
+                                  {emoji}
+                                </div>
+                                <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${cfg.badge}`}>
+                                  {member.role}
+                                </span>
+                                <p className="text-sm font-bold text-slate-800 leading-tight">{member.name}</p>
+                                {(member.birthYear || member.deathYear) && (
+                                  <p className="text-[11px] text-slate-500 font-medium">
+                                    {member.birthYear || '?'}{member.deathYear ? ` – ${member.deathYear}` : ''}
+                                  </p>
+                                )}
+                                {member.notes && (
+                                  <p className="text-[10px] text-slate-400 italic line-clamp-2 leading-tight">{member.notes}</p>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                        {/* Connector */}
+                        {grp < 2 && grouped[grp + 1]?.length > 0 && (
+                          <div className="flex justify-center mt-6">
+                            <div className="flex flex-col items-center gap-1">
+                              <div className="w-0.5 h-4 bg-violet-200 rounded-full" />
+                              <div className="w-2 h-2 rounded-full bg-violet-300" />
+                              <div className="w-0.5 h-4 bg-violet-200 rounded-full" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                  {/* Central card - Homenageado */}
+                  <div className="flex justify-center">
+                    <div className="flex flex-col items-center gap-2 p-5 rounded-2xl border-2 bg-white border-violet-300 shadow-lg shadow-violet-100 min-w-[130px] text-center relative">
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center px-3 py-0.5 rounded-full text-[10px] font-bold bg-violet-600 text-white shadow whitespace-nowrap">
+                        🕊️ Homenageado
+                      </span>
+                      <div className="w-16 h-16 rounded-full bg-violet-50 border-2 border-violet-200 overflow-hidden mt-2">
+                        {memorial.profile_image_url ? (
+                          <img src={memorial.profile_image_url} alt={memorial.name} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-3xl">🕊️</div>
+                        )}
+                      </div>
+                      <p className="text-sm font-bold text-violet-800">{memorial.name}</p>
+                      <p className="text-[11px] text-violet-500 font-medium">
+                        {memorial.birth_date ? new Date(memorial.birth_date).getFullYear() : '?'}
+                        {' – '}
+                        {memorial.death_date ? new Date(memorial.death_date).getFullYear() : 'Presente'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })()}
           </div>
         )}
 

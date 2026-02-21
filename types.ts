@@ -22,6 +22,30 @@ export interface MediaItem {
   isExisting?: boolean; // Flag to track if it's from DB
 }
 
+export type FamilyRole =
+  | 'Pai'
+  | 'Mãe'
+  | 'Cônjuge'
+  | 'Filho(a)'
+  | 'Irmão/Irmã'
+  | 'Avô'
+  | 'Avó'
+  | 'Neto(a)'
+  | 'Tio(a)'
+  | 'Sobrinho(a)'
+  | 'Outro';
+
+export interface FamilyTreeMember {
+  id: string;
+  name: string;
+  role: FamilyRole;
+  birthYear?: string;
+  deathYear?: string;
+  notes?: string;
+  order?: number;
+  isExisting?: boolean;
+}
+
 export interface MemorialFormData {
   name: string;
   relationship: string;
@@ -29,12 +53,13 @@ export interface MemorialFormData {
   deathDate: string;
   biography: string;
   isPublic: boolean;
-  memories: string; 
+  memories: string;
   timeline: TimelineEvent[];
-  
-  coverImage: string | null; 
-  profileImage: string | null; 
-  
+  familyTree: FamilyTreeMember[];
+
+  coverImage: string | null;
+  profileImage: string | null;
+
   gallery: MediaItem[];
   videos: MediaItem[];
   audios: MediaItem[];

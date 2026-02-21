@@ -1,5 +1,5 @@
 import { supabase } from './supabaseClient';
-import { MemorialFormData, Memorial, TimelineEvent, MediaItem } from '../types';
+import { MemorialFormData, Memorial, TimelineEvent, MediaItem, FamilyTreeMember } from '../types';
 
 // --- MOCK DATA FOR DEMO (Fallback when DB is empty) ---
 const MOCK_MEMORIALS: Memorial[] = [
@@ -85,7 +85,7 @@ export const getUserProfile = async (userId: string) => {
     .select('*')
     .eq('id', userId)
     .single();
-  
+
   return { data, error };
 };
 
@@ -93,7 +93,7 @@ export const updateUserProfileImage = async (userId: string, file: File, type: '
   try {
     const folder = type === 'avatar' ? 'avatars' : 'covers';
     const url = await uploadFile(file, `${userId}/profile/${folder}`);
-    
+
     if (!url) throw new Error('Falha no upload da imagem');
 
     const updateData = type === 'avatar' ? { avatar_url: url } : { cover_url: url };
@@ -116,7 +116,7 @@ export const deleteUserAccount = async () => {
   try {
     // Call the PostgreSQL function we created to delete the auth user
     const { error } = await supabase.rpc('delete_own_account');
-    
+
     if (error) throw error;
     return { success: true };
   } catch (error) {
@@ -192,33 +192,39 @@ export const getMemorialFull = async (memorialId: string) => {
     return {
       memorial: mockMemorial,
       timeline: [
-         { id: 't1', memorial_id: memorialId, year: '1980', title: 'Nascimento', description: 'Chegada ao mundo, trazendo alegria para a família.' },
-         { id: 't2', memorial_id: memorialId, year: '1998', title: 'Formatura', description: 'Conclusão dos estudos, um momento de muito orgulho.' },
-         { id: 't3', memorial_id: memorialId, year: '2010', title: 'Viagem dos Sonhos', description: 'A tão aguardada viagem com toda a família reunida.' }
+        { id: 't1', memorial_id: memorialId, year: '1980', title: 'Nascimento', description: 'Chegada ao mundo, trazendo alegria para a família.' },
+        { id: 't2', memorial_id: memorialId, year: '1998', title: 'Formatura', description: 'Conclusão dos estudos, um momento de muito orgulho.' },
+        { id: 't3', memorial_id: memorialId, year: '2010', title: 'Viagem dos Sonhos', description: 'A tão aguardada viagem com toda a família reunida.' }
       ],
       media: [
         { id: 'm1', memorial_id: memorialId, type: 'image', url: mockMemorial.cover_image_url || '' },
         { id: 'm2', memorial_id: memorialId, type: 'image', url: mockMemorial.profile_image_url || '' },
         { id: 'm3', memorial_id: memorialId, type: 'image', url: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=2664&auto=format&fit=crop' },
         { id: 'm4', memorial_id: memorialId, type: 'image', url: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=2670&auto=format&fit=crop' },
-        
+
         // Video Mock
-        { 
-          id: 'v1', 
-          memorial_id: memorialId, 
-          type: 'video', 
+        {
+          id: 'v1',
+          memorial_id: memorialId,
+          type: 'video',
           url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
           file_name: 'viagem_familia.mp4'
         },
-        
+
         // Audio Mock
-        { 
-          id: 'a1', 
-          memorial_id: memorialId, 
-          type: 'audio', 
-          url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', 
+        {
+          id: 'a1',
+          memorial_id: memorialId,
+          type: 'audio',
+          url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
           file_name: 'mensagem_voz.mp3'
         }
+      ],
+      familyTree: [
+        { id: 'f1', memorial_id: memorialId, name: 'José Silva', role: 'Pai', birth_year: '1940', death_year: '2005', order: 0 },
+        { id: 'f2', memorial_id: memorialId, name: 'Maria Silva', role: 'Mãe', birth_year: '1945', death_year: null, order: 1 },
+        { id: 'f3', memorial_id: memorialId, name: 'Ana Silva', role: 'Cônjuge', birth_year: '1950', death_year: null, order: 2 },
+        { id: 'f4', memorial_id: memorialId, name: 'Pedro Silva', role: 'Filho(a)', birth_year: '1975', death_year: null, order: 3 },
       ],
       error: null
     };
@@ -246,16 +252,24 @@ export const getMemorialFull = async (memorialId: string) => {
     .select('*')
     .eq('memorial_id', memorialId);
 
-  return { 
-    memorial, 
-    timeline: timeline || [], 
+  // 4. Get Family Tree
+  const { data: familyTree, error: familyError } = await supabase
+    .from('family_tree_members')
+    .select('*')
+    .eq('memorial_id', memorialId)
+    .order('order', { ascending: true });
+
+  return {
+    memorial,
+    timeline: timeline || [],
     media: media || [],
-    error: timeError || mediaError
+    familyTree: familyTree || [],
+    error: timeError || mediaError || familyError
   };
 };
 
 export const createMemorial = async (
-  formData: MemorialFormData, 
+  formData: MemorialFormData,
   userId: string,
   coverFile: File | null,
   profileFile: File | null
@@ -306,6 +320,9 @@ export const createMemorial = async (
     await saveMedia(memorialId, userId, formData.videos, 'video');
     await saveMedia(memorialId, userId, formData.audios, 'audio');
 
+    // 5. Save Family Tree
+    await saveFamilyTree(memorialId, formData.familyTree || []);
+
     return { success: true, memorialId };
 
   } catch (error) {
@@ -337,7 +354,7 @@ export const updateMemorial = async (
       const url = await uploadFile(coverFile, `${userId}/covers`);
       if (url) updateData.cover_image_url = url;
     }
-    
+
     if (profileFile) {
       const url = await uploadFile(profileFile, `${userId}/profiles`);
       if (url) updateData.profile_image_url = url;
@@ -372,6 +389,10 @@ export const updateMemorial = async (
     await saveMedia(memorialId, userId, newVideos, 'video');
     await saveMedia(memorialId, userId, newAudios, 'audio');
 
+    // 6. Update Family Tree (delete all + re-insert)
+    await supabase.from('family_tree_members').delete().eq('memorial_id', memorialId);
+    await saveFamilyTree(memorialId, formData.familyTree || []);
+
     return { success: true };
 
   } catch (error) {
@@ -397,9 +418,26 @@ export const deleteMemorial = async (memorialId: string) => {
 
 // --- Helpers ---
 
+const saveFamilyTree = async (memorialId: string, members: FamilyTreeMember[]) => {
+  if (members.length === 0) return;
+
+  const payload = members.map((member, index) => ({
+    memorial_id: memorialId,
+    name: member.name,
+    role: member.role,
+    birth_year: member.birthYear || null,
+    death_year: member.deathYear || null,
+    notes: member.notes || null,
+    order: index
+  }));
+
+  const { error } = await supabase.from('family_tree_members').insert(payload);
+  if (error) console.error('Error saving family tree:', error);
+};
+
 const saveTimeline = async (memorialId: string, events: TimelineEvent[]) => {
   if (events.length === 0) return;
-  
+
   const timelinePayload = events.map(event => ({
     memorial_id: memorialId,
     year: event.year,
@@ -416,7 +454,7 @@ const saveMedia = async (memorialId: string, userId: string, items: MediaItem[],
 
   const uploadPromises = items.map(async (item) => {
     if (!item.file) return null; // Should not happen for new items
-    
+
     const url = await uploadFile(item.file, `${userId}/${memorialId}/${category}`);
     if (url) {
       return {
