@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, PlayCircle, QrCode } from 'lucide-react';
+import { PlayCircle, QrCode } from 'lucide-react';
 
 interface HeroProps {
   onOpenCreateModal: () => void;
@@ -11,6 +11,16 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
   return (
     <section className="relative overflow-hidden pt-20 pb-24 lg:pt-36 lg:pb-32 bg-slate-900">
 
+      {/* Background Image with Gradient Overlay */}
+      <div className="absolute inset-0 w-full h-full">
+        <img
+          src="/hero-bg.png"
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900"></div>
+      </div>
+
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-[10%] left-1/4 w-[500px] h-[500px] bg-brand-600/20 rounded-full blur-[120px] animate-blob mix-blend-screen"></div>
@@ -19,12 +29,6 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
       </div>
 
       <div className="max-w-4xl mx-auto px-6 sm:px-8 text-center relative z-10">
-
-        {/* Pill Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-900/50 border border-brand-700/50 text-brand-300 mb-8 animate-fade-in backdrop-blur-sm shadow-lg shadow-brand-900/20">
-          <Heart size={16} className="fill-brand-500 text-brand-500" />
-          <span className="text-sm font-semibold tracking-wide">Guarde quem você ama para sempre</span>
-        </div>
 
         {/*
           Título em 3 linhas — fluid typography via clamp.
