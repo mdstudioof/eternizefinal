@@ -247,6 +247,16 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
     setIsGeneratingAi(false);
   };
 
+  // Build Cakto checkout URL with tracking params
+  const buildCaktoUrl = (memId: string) => {
+    const baseUrl = "https://pay.cakto.com.br/39p2jpp_772823";
+    const params = new URLSearchParams();
+    params.set('sck', memId); // memorial_id for webhook tracking
+    if (user?.email) params.set('email', user.email);
+    if (user?.email) params.set('confirmEmail', user.email);
+    return `${baseUrl}?${params.toString()}`;
+  };
+
   // Initial Click on "Save"
   const handleSaveClick = () => {
     if (!user) {
@@ -255,55 +265,79 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
     }
 
     if (memorialId) {
-      // If editing, skip payment modal
+      // If editing, skip payment — just save
       finalizeSave();
     } else {
-      // If creating, show payment modal
+      // If creating, save first then redirect to payment
+      handleCreateAndPay();
+    }
+  };
+
+  // New flow: Save memorial first, then redirect to Cakto
+  const handleCreateAndPay = async () => {
+    if (!user) return;
+    setIsSaving(true);
+
+    try {
+      const result = await createMemorial(formData, user.id, coverFile, profileFile);
+
+      if (!result.success || !result.memorialId) {
+        throw new Error("Erro ao salvar dados do memorial.");
+      }
+
+      // Memorial saved with status: false
+      // Build Cakto URL with memorial_id as tracking param
+      const paymentUrl = buildCaktoUrl(result.memorialId);
+
+      // Show success and redirect to payment
       setShowPaymentModal(true);
+      setPaymentLinkOpened(false);
+
+      // Store the memorialId for the redirect
+      (window as any).__pendingPaymentUrl = paymentUrl;
+      (window as any).__pendingMemorialId = result.memorialId;
+
+    } catch (error: any) {
+      console.error(error);
+      alert(error.message || "Ocorreu um erro inesperado.");
+    } finally {
+      setIsSaving(false);
     }
   };
 
   const handleOpenPayment = () => {
-    const paymentUrl = "https://pay.cakto.com.br/39p2jpp_772823";
+    const paymentUrl = (window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823";
     window.open(paymentUrl, '_blank');
     setPaymentLinkOpened(true);
   };
 
-  // Actual Save Logic (called after payment or if editing)
+  const handlePaymentDone = () => {
+    setShowPaymentModal(false);
+    alert("Memorial salvo! Assim que o pagamento for confirmado pela Cakto, seu memorial será ativado automaticamente.");
+    onCancel(); // Go back to dashboard
+  };
+
+  // Save Logic for Edit mode only
   const finalizeSave = async () => {
     if (!user) return;
 
     setIsSaving(true);
 
     try {
-      let result;
-      if (memorialId) {
-        // Update Mode
-        result = await updateMemorial(
-          memorialId,
-          user.id,
-          formData,
-          coverFile,
-          profileFile,
-          deletedMediaIds
-        );
-      } else {
-        // Create Mode
-        result = await createMemorial(formData, user.id, coverFile, profileFile);
-      }
+      const result = await updateMemorial(
+        memorialId!,
+        user.id,
+        formData,
+        coverFile,
+        profileFile,
+        deletedMediaIds
+      );
 
       if (!result.success) {
         throw new Error("Erro ao salvar dados do memorial.");
       }
 
-      setShowPaymentModal(false);
-
-      if (memorialId) {
-        alert("Memorial atualizado com sucesso!");
-      } else {
-        alert("Memorial criado com sucesso! Ele ficará aguardando aprovação do administrador para se tornar público.");
-      }
-
+      alert("Memorial atualizado com sucesso!");
       onCancel(); // Go back to dashboard
 
     } catch (error: any) {
@@ -340,11 +374,11 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
 
               <div className="text-center mb-6">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
-                  <CreditCard size={32} />
+                  <CheckCircle size={32} />
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900">Finalizar Memorial</h3>
+                <h3 className="text-2xl font-bold text-slate-900">Memorial Salvo!</h3>
                 <p className="text-slate-500 mt-2">
-                  Para eternizar este memorial, é necessário realizar o pagamento da taxa única.
+                  Seu memorial foi salvo com sucesso. Agora realize o pagamento para ativá-lo.
                 </p>
               </div>
 
@@ -360,22 +394,21 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
                 {paymentLinkOpened && (
                   <div className="animate-fade-in pt-2">
                     <p className="text-sm text-center text-slate-500 mb-3">
-                      Já realizou o pagamento na nova aba?
+                      Após o pagamento, seu memorial será ativado automaticamente.
                     </p>
                     <button
-                      onClick={finalizeSave}
-                      disabled={isSaving}
+                      onClick={handlePaymentDone}
                       className="w-full py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md"
                     >
-                      {isSaving ? <Loader2 className="animate-spin" /> : <CheckCircle size={20} />}
-                      Confirmar Pagamento e Salvar
+                      <CheckCircle size={20} />
+                      Concluir
                     </button>
                   </div>
                 )}
 
                 {!paymentLinkOpened && (
                   <p className="text-xs text-center text-slate-400 mt-4">
-                    Após clicar em pagar, o botão de confirmação aparecerá aqui.
+                    Clique acima para abrir a página de pagamento.
                   </p>
                 )}
               </div>
@@ -466,11 +499,11 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
 
             <div className="text-center mb-6">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
-                <CreditCard size={32} />
+                <CheckCircle size={32} />
               </div>
-              <h3 className="text-2xl font-bold text-slate-900">Finalizar Memorial</h3>
+              <h3 className="text-2xl font-bold text-slate-900">Memorial Salvo!</h3>
               <p className="text-slate-500 mt-2">
-                Para eternizar este memorial, é necessário realizar o pagamento da taxa única.
+                Seu memorial foi salvo com sucesso. Agora realize o pagamento para ativá-lo.
               </p>
             </div>
 
@@ -486,22 +519,21 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
               {paymentLinkOpened && (
                 <div className="animate-fade-in pt-2">
                   <p className="text-sm text-center text-slate-500 mb-3">
-                    Já realizou o pagamento na nova aba?
+                    Após o pagamento, seu memorial será ativado automaticamente.
                   </p>
                   <button
-                    onClick={finalizeSave}
-                    disabled={isSaving}
+                    onClick={handlePaymentDone}
                     className="w-full py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md"
                   >
-                    {isSaving ? <Loader2 className="animate-spin" /> : <CheckCircle size={20} />}
-                    Confirmar Pagamento e Salvar
+                    <CheckCircle size={20} />
+                    Concluir
                   </button>
                 </div>
               )}
 
               {!paymentLinkOpened && (
                 <p className="text-xs text-center text-slate-400 mt-4">
-                  Após clicar em pagar, o botão de confirmação aparecerá aqui.
+                  Clique acima para abrir a página de pagamento.
                 </p>
               )}
             </div>
