@@ -187,8 +187,6 @@ const AppContent: React.FC = () => {
               onExploreClick={handleExploreClick}
             />
 
-            <Features />
-
             <ValueProposition onStartCreate={handleCreateClick} />
 
             <footer className="bg-slate-900 text-white py-12 border-t border-slate-800">
