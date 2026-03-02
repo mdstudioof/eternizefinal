@@ -107,8 +107,8 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                                     key={tab.key}
                                                     onClick={() => setActiveTab(tab.key)}
                                                     className={`text-[8px] font-bold px-2.5 py-1.5 rounded-full border transition-all ${activeTab === tab.key
-                                                            ? 'bg-slate-900 text-white border-slate-900'
-                                                            : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
+                                                        ? 'bg-slate-900 text-white border-slate-900'
+                                                        : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
                                                         }`}
                                                 >
                                                     {tab.label}
@@ -168,12 +168,12 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                                     </div>
                                                     <div className="grid grid-cols-3 gap-1.5 mb-4">
                                                         {[
-                                                            'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=400&auto=format&fit=crop',
                                                             'https://images.unsplash.com/photo-1551843073-4a9a5b6fcd5f?q=80&w=400&auto=format&fit=crop',
                                                             'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=400&auto=format&fit=crop',
                                                             'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=400&auto=format&fit=crop',
                                                             'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=400&auto=format&fit=crop',
                                                             'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=400&auto=format&fit=crop',
+                                                            'https://images.unsplash.com/photo-1609220136736-443140cffec6?q=80&w=400&auto=format&fit=crop',
                                                         ].map((src, i) => (
                                                             <div key={i} className="aspect-square rounded-xl overflow-hidden shadow-sm group">
                                                                 <img

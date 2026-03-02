@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 
 const testimonials = [
     {
@@ -103,103 +103,108 @@ const Testimonials: React.FC = () => {
     const t = testimonials[current];
 
     return (
-        <section className="bg-gradient-to-b from-slate-50 to-white py-20 lg:py-28">
-            <div className="max-w-5xl mx-auto px-6 sm:px-8">
+        <section className="bg-slate-900 py-20 lg:py-28 relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+                <div className="absolute -top-[20%] -left-[10%] w-[500px] h-[500px] bg-brand-600/10 rounded-full blur-[120px]" />
+                <div className="absolute -bottom-[20%] -right-[10%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]" />
+            </div>
+
+            <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-10">
 
                 {/* Header */}
-                <div className="text-center mb-12">
-                    <span className="inline-block px-4 py-1.5 rounded-full bg-brand-50 text-brand-600 text-xs font-bold uppercase tracking-widest mb-4 border border-brand-100">
+                <div className="text-center mb-14">
+                    <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-brand-300 text-xs font-bold uppercase tracking-widest mb-4 border border-white/10 backdrop-blur-sm">
                         Depoimentos
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight">
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
                         Quem já eternizou<br className="hidden sm:block" /> uma memória especial
                     </h2>
                 </div>
 
                 {/* Card */}
                 <div
-                    className="relative bg-white rounded-3xl shadow-2xl shadow-slate-200/70 border border-slate-100 overflow-hidden"
+                    className="relative max-w-3xl mx-auto"
                     style={{
                         opacity: fade ? 1 : 0,
                         transform: fade ? 'translateY(0)' : 'translateY(10px)',
                         transition: 'opacity 0.3s ease, transform 0.3s ease',
                     }}
                 >
-                    {/* Barra de progresso no topo */}
-                    <div className="absolute top-0 left-0 h-[3px] bg-slate-100 w-full z-10">
-                        <div
-                            className="h-full bg-gradient-to-r from-brand-400 to-purple-400 transition-none"
-                            style={{ width: `${progress}%` }}
-                        />
-                    </div>
-
-                    <div className="flex flex-col md:flex-row">
-                        {/* Foto — coluna esquerda em desktop */}
-                        <div className="md:w-56 lg:w-64 flex-shrink-0 flex items-center justify-center bg-gradient-to-br from-brand-600 to-purple-700 p-8 md:rounded-none">
-                            <img
-                                src={t.photo}
-                                alt={t.name}
-                                className="w-28 h-28 md:w-36 md:h-36 rounded-full object-cover border-4 border-white/30 shadow-2xl"
+                    <div className="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-10 relative overflow-hidden">
+                        {/* Progress bar */}
+                        <div className="absolute top-0 left-0 h-[2px] bg-white/5 w-full">
+                            <div
+                                className="h-full bg-gradient-to-r from-brand-400 to-purple-400 transition-none"
+                                style={{ width: `${progress}%` }}
                             />
                         </div>
 
-                        {/* Conteúdo */}
-                        <div className="flex-1 p-8 md:p-10 flex flex-col justify-center">
-                            {/* Stars */}
-                            <div className="flex gap-1 mb-5">
-                                {Array.from({ length: t.stars }).map((_, i) => (
-                                    <Star key={i} size={18} className="fill-amber-400 text-amber-400" />
-                                ))}
-                            </div>
+                        {/* Quote icon */}
+                        <div className="absolute top-6 right-6 md:top-8 md:right-8">
+                            <Quote size={40} className="text-brand-500/20" />
+                        </div>
 
-                            {/* Texto */}
-                            <p className="text-slate-700 text-lg md:text-xl leading-relaxed mb-6 font-medium">
-                                "{t.text}"
-                            </p>
+                        {/* Stars */}
+                        <div className="flex gap-1 mb-5">
+                            {Array.from({ length: t.stars }).map((_, i) => (
+                                <Star key={i} size={16} className="fill-amber-400 text-amber-400" />
+                            ))}
+                        </div>
 
-                            {/* Autor + navegação */}
-                            <div className="flex items-center justify-between flex-wrap gap-4">
-                                <div>
-                                    <p className="font-bold text-slate-900 text-base">{t.name}</p>
-                                    <p className="text-slate-400 text-sm">{t.location}</p>
-                                </div>
+                        {/* Text */}
+                        <p className="text-white/90 text-lg md:text-xl leading-relaxed mb-8 font-medium max-w-xl">
+                            "{t.text}"
+                        </p>
 
-                                <div className="flex items-center gap-2">
-                                    <button
-                                        onClick={goPrev}
-                                        className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:border-brand-300 hover:text-brand-600 hover:bg-brand-50 transition-all"
-                                        aria-label="Anterior"
-                                    >
-                                        <ChevronLeft size={18} />
-                                    </button>
-                                    <button
-                                        onClick={goNext}
-                                        className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:border-brand-300 hover:text-brand-600 hover:bg-brand-50 transition-all"
-                                        aria-label="Próximo"
-                                    >
-                                        <ChevronRight size={18} />
-                                    </button>
-                                </div>
+                        {/* Author row */}
+                        <div className="flex items-center gap-4">
+                            <img
+                                src={t.photo}
+                                alt={t.name}
+                                className="w-12 h-12 rounded-full object-cover border-2 border-brand-500/40 shadow-lg"
+                            />
+                            <div>
+                                <p className="font-bold text-white text-sm">{t.name}</p>
+                                <p className="text-white/40 text-xs">{t.location}</p>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Thumbnails / Dots com foto */}
-                <div className="flex justify-center gap-3 mt-8">
-                    {testimonials.map((item, i) => (
-                        <button
-                            key={i}
-                            onClick={() => goTo(i)}
-                            className={`rounded-full transition-all duration-300 border-2 overflow-hidden ${i === current
-                                    ? 'w-11 h-11 border-brand-500 shadow-md shadow-brand-200'
-                                    : 'w-8 h-8 border-transparent opacity-50 hover:opacity-80'
-                                }`}
-                            aria-label={`Ver depoimento de ${item.name}`}
-                        >
-                            <img src={item.photo} alt={item.name} className="w-full h-full object-cover" />
-                        </button>
-                    ))}
+                    {/* Navigation arrows */}
+                    <div className="flex items-center justify-between mt-6">
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={goPrev}
+                                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:border-brand-400/50 hover:text-brand-300 hover:bg-white/5 transition-all"
+                                aria-label="Anterior"
+                            >
+                                <ChevronLeft size={18} />
+                            </button>
+                            <button
+                                onClick={goNext}
+                                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/50 hover:border-brand-400/50 hover:text-brand-300 hover:bg-white/5 transition-all"
+                                aria-label="Próximo"
+                            >
+                                <ChevronRight size={18} />
+                            </button>
+                        </div>
+
+                        {/* Dot indicators */}
+                        <div className="flex gap-2">
+                            {testimonials.map((item, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => goTo(i)}
+                                    className={`rounded-full transition-all duration-300 ${i === current
+                                        ? 'w-8 h-2 bg-brand-500'
+                                        : 'w-2 h-2 bg-white/20 hover:bg-white/40'
+                                        }`}
+                                    aria-label={`Ver depoimento de ${item.name}`}
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
             </div>

@@ -178,9 +178,9 @@ const AppContent: React.FC = () => {
               onViewDemo={handleViewDemo}
             />
 
-            <Testimonials />
-
             <MemorialShowcase onStartCreate={handleCreateClick} />
+
+            <Testimonials />
 
             <FeaturedMemorials
               onViewMemorial={handleViewMemorial}
