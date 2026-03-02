@@ -126,7 +126,7 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                                     <div className="bg-white rounded-2xl shadow-md shadow-slate-100/80 border border-slate-100 p-4 relative overflow-hidden">
                                                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-400 via-purple-400 to-pink-400" />
                                                         <p className="text-[10px] text-slate-700 leading-relaxed whitespace-pre-wrap font-serif mt-1">
-                                                            "Helena foi uma mulher de fibra, amorosa e cheia de vida. Dedicou seus dias a cuidar da família e das suas amadas orquídeas. Seu bolo de fubá nas tardes de domingo deixará saudades eternas."
+                                                            "Helena foi uma mulher de fibra, amorosa e cheia de vida. Dedicou seus dias a cuidar da família e das suas amadas orquídeas. Seu bolo de fubá nas tardes de domingo deixará saudades eternas. Ensinou a todos nós o valor da honestidade e do trabalho duro."
                                                         </p>
                                                         <div className="mt-3 flex justify-center">
                                                             <div className="h-0.5 w-12 bg-slate-100 rounded-full" />
@@ -140,10 +140,9 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                                 <div className="animate-fade-in">
                                                     <div className="space-y-2 pl-3 border-l-2 border-slate-200 ml-1.5">
                                                         {[
-                                                            { year: '1945', title: 'Nascimento', desc: 'Chegada ao mundo, trazendo alegria para a família.' },
-                                                            { year: '1965', title: 'Casamento', desc: 'Uniu-se a José em uma cerimônia inesquecível.' },
-                                                            { year: '1970', title: 'Primeiro Filho', desc: 'A chegada do primeiro filho trouxe nova luz.' },
-                                                            { year: '2010', title: 'Viagem dos Sonhos', desc: 'A tão aguardada viagem com toda a família.' },
+                                                            { year: '1980', title: 'Nascimento', desc: 'Chegada ao mundo, trazendo alegria para a família.' },
+                                                            { year: '1998', title: 'Formatura', desc: 'Conclusão dos estudos, um momento de muito orgulho.' },
+                                                            { year: '2010', title: 'Viagem dos Sonhos', desc: 'A tão aguardada viagem com toda a família reunida.' },
                                                         ].map((ev, i) => (
                                                             <div key={i} className="relative pl-4">
                                                                 <div className="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-amber-400 border-2 border-white ring-1 ring-amber-200" />
@@ -166,14 +165,12 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                                         </div>
                                                         <span className="text-[9px] font-bold text-slate-800">Galeria de Fotos</span>
                                                     </div>
-                                                    <div className="grid grid-cols-3 gap-1.5 mb-4">
+                                                    <div className="grid grid-cols-2 gap-1.5 mb-4">
                                                         {[
+                                                            'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=400&auto=format&fit=crop',
                                                             'https://images.unsplash.com/photo-1551843073-4a9a5b6fcd5f?q=80&w=400&auto=format&fit=crop',
                                                             'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=400&auto=format&fit=crop',
                                                             'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=400&auto=format&fit=crop',
-                                                            'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=400&auto=format&fit=crop',
-                                                            'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=400&auto=format&fit=crop',
-                                                            'https://images.unsplash.com/photo-1609220136736-443140cffec6?q=80&w=400&auto=format&fit=crop',
                                                         ].map((src, i) => (
                                                             <div key={i} className="aspect-square rounded-xl overflow-hidden shadow-sm group">
                                                                 <img
