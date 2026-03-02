@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Testimonials from './components/Testimonials';
+import MemorialShowcase from './components/MemorialShowcase';
 import Features from './components/Features';
 import ValueProposition from './components/ValueProposition';
 import FeaturedMemorials from './components/FeaturedMemorials';
@@ -178,6 +179,8 @@ const AppContent: React.FC = () => {
             />
 
             <Testimonials />
+
+            <MemorialShowcase onStartCreate={handleCreateClick} />
 
             <FeaturedMemorials
               onViewMemorial={handleViewMemorial}
