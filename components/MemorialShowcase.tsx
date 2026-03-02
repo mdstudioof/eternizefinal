@@ -1,11 +1,22 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { ArrowRight, Calendar, Image as ImageIcon, Video, Clock, Heart } from 'lucide-react';
 
 interface MemorialShowcaseProps {
     onStartCreate: () => void;
 }
 
+type MockTab = 'timeline' | 'biography' | 'media' | 'tributes';
+
 const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) => {
+    const [activeTab, setActiveTab] = useState<MockTab>('media');
+
+    const tabs: { key: MockTab; label: string }[] = [
+        { key: 'timeline', label: 'Linha do Tempo' },
+        { key: 'biography', label: 'Biografia' },
+        { key: 'media', label: 'Mídia' },
+        { key: 'tributes', label: 'Homenagens' },
+    ];
+
     return (
         <section className="bg-gradient-to-b from-white via-slate-50 to-white py-20 lg:py-28 overflow-hidden">
             <div className="max-w-6xl mx-auto px-6 sm:px-8">
@@ -56,94 +67,163 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                     className="bg-white rounded-[2.3rem] overflow-hidden relative"
                                     style={{ height: '580px' }}
                                 >
-                                    {/* Inner scroll content */}
-                                    <div className="w-full h-full overflow-hidden">
+                                    <div className="w-full h-full overflow-y-auto scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
 
-                                        {/* Mini Navbar */}
-                                        <div className="bg-white px-4 py-3 flex items-center justify-between border-b border-slate-100 relative z-10">
-                                            <div className="flex items-center gap-2">
-                                                <div className="w-6 h-6 bg-brand-600 rounded-md flex items-center justify-center">
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
-                                                        <path d="M2 17l10 5 10-5" />
-                                                        <path d="M2 12l10 5 10-5" />
-                                                    </svg>
-                                                </div>
-                                                <span className="text-[11px] font-bold text-slate-900 tracking-tight">EternizeQR</span>
-                                            </div>
-                                            <div className="flex gap-1">
-                                                <div className="w-5 h-[2px] bg-slate-400 rounded" />
-                                                <div className="w-5 h-[2px] bg-slate-400 rounded" />
-                                            </div>
-                                        </div>
+                                        {/* ---- MEMORIAL VIEW (matches MemorialViewPage.tsx exactly) ---- */}
 
-                                        {/* Cover Image */}
-                                        <div className="h-36 bg-gradient-to-b from-brand-900 to-slate-800 relative">
+                                        {/* Hero Cover — same style as MemorialViewPage */}
+                                        <div className="h-32 w-full bg-slate-900 relative flex-shrink-0">
                                             <img
-                                                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=300&fit=crop"
+                                                src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=800&auto=format&fit=crop"
                                                 alt=""
-                                                className="w-full h-full object-cover opacity-80"
+                                                className="w-full h-full object-cover opacity-90"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
                                         </div>
 
-                                        {/* Profile Circle */}
-                                        <div className="flex flex-col items-center -mt-12 relative z-10 px-4">
-                                            <div className="w-20 h-20 rounded-full border-4 border-white shadow-lg overflow-hidden bg-slate-100">
+                                        {/* Profile Header — same as MemorialViewPage */}
+                                        <div className="text-center -mt-10 relative z-10 px-4">
+                                            <div className="w-20 h-20 rounded-full border-[5px] border-white shadow-xl overflow-hidden bg-slate-100 mx-auto">
                                                 <img
-                                                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face"
-                                                    alt="Memorial"
+                                                    src="https://images.unsplash.com/photo-1551843073-4a9a5b6fcd5f?q=80&w=400&auto=format&fit=crop"
+                                                    alt="Helena Ferreira"
                                                     className="w-full h-full object-cover"
                                                 />
                                             </div>
 
-                                            <p className="text-[10px] text-slate-400 mt-3 font-medium">Em memória de</p>
-                                            <h3 className="text-sm font-bold text-slate-900 mt-0.5">Lucas Augusto Silva</h3>
+                                            <h3 className="text-[15px] font-bold text-slate-900 mt-2 tracking-tight">Helena Ferreira</h3>
 
-                                            <div className="flex items-center gap-1 mt-1.5 px-2 py-0.5 bg-brand-50 rounded-full text-brand-700 border border-brand-100">
-                                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-                                                    <line x1="16" y1="2" x2="16" y2="6" />
-                                                    <line x1="8" y1="2" x2="8" y2="6" />
-                                                    <line x1="3" y1="10" x2="21" y2="10" />
-                                                </svg>
-                                                <span className="text-[9px] font-semibold">Vida: 21 de agosto de 1984 - 17 de abril de 2016</span>
+                                            {/* Date badge — same style as MemorialViewPage */}
+                                            <div className="inline-flex items-center gap-1.5 mt-1.5 px-2.5 py-1 bg-brand-50 rounded-full text-brand-700 border border-brand-100">
+                                                <Calendar size={10} />
+                                                <span className="text-[9px] font-semibold">1945 - 2023</span>
                                             </div>
-
-                                            <p className="text-[9px] text-slate-500 text-center mt-2 leading-relaxed px-2 line-clamp-2">
-                                                Se o amor pudesse ter salvado você, você teria vivido para sempre.
-                                            </p>
                                         </div>
 
-                                        {/* Tabs */}
-                                        <div className="flex gap-1.5 justify-center mt-3 px-3">
-                                            {['Linha do Tempo', 'Biografia', 'Mídia', 'Homenagens'].map((tab, i) => (
+                                        {/* Tabs — navigable */}
+                                        <div className="flex gap-1.5 justify-center mt-3 px-3 flex-wrap">
+                                            {tabs.map((tab) => (
                                                 <button
-                                                    key={tab}
-                                                    className={`text-[8px] font-bold px-2 py-1.5 rounded-full border transition-all ${i === 2
+                                                    key={tab.key}
+                                                    onClick={() => setActiveTab(tab.key)}
+                                                    className={`text-[8px] font-bold px-2.5 py-1.5 rounded-full border transition-all ${activeTab === tab.key
                                                             ? 'bg-slate-900 text-white border-slate-900'
-                                                            : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300'
+                                                            : 'bg-white text-slate-500 border-slate-200 hover:border-slate-300'
                                                         }`}
                                                 >
-                                                    {tab}
+                                                    {tab.label}
                                                 </button>
                                             ))}
                                         </div>
 
-                                        {/* Mini Gallery Grid */}
-                                        <div className="grid grid-cols-3 gap-1.5 px-3 mt-3">
-                                            {[
-                                                'https://images.unsplash.com/photo-1529156069898-49bada10bca3?w=200&h=200&fit=crop',
-                                                'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&fit=crop',
-                                                'https://images.unsplash.com/photo-1519098901909-b1553a1190af?w=200&h=200&fit=crop',
-                                                'https://images.unsplash.com/photo-1517331272969-b1557b94f3c0?w=200&h=200&fit=crop',
-                                                'https://images.unsplash.com/photo-1491438590914-bc09fcaaf77a?w=200&h=200&fit=crop',
-                                                'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=200&h=200&fit=crop',
-                                            ].map((src, i) => (
-                                                <div key={i} className="aspect-square rounded-lg overflow-hidden">
-                                                    <img src={src} alt="" className="w-full h-full object-cover" />
+                                        {/* Tab Content — scrollable inner area */}
+                                        <div className="px-3 pt-3 pb-6">
+
+                                            {/* ========= BIOGRAPHY TAB ========= */}
+                                            {activeTab === 'biography' && (
+                                                <div className="animate-fade-in">
+                                                    {/* Biography Card — same style as MemorialViewPage */}
+                                                    <div className="bg-white rounded-2xl shadow-md shadow-slate-100/80 border border-slate-100 p-4 relative overflow-hidden">
+                                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-400 via-purple-400 to-pink-400" />
+                                                        <p className="text-[10px] text-slate-700 leading-relaxed whitespace-pre-wrap font-serif mt-1">
+                                                            "Helena foi uma mulher de fibra, amorosa e cheia de vida. Dedicou seus dias a cuidar da família e das suas amadas orquídeas. Seu bolo de fubá nas tardes de domingo deixará saudades eternas."
+                                                        </p>
+                                                        <div className="mt-3 flex justify-center">
+                                                            <div className="h-0.5 w-12 bg-slate-100 rounded-full" />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            ))}
+                                            )}
+
+                                            {/* ========= TIMELINE TAB ========= */}
+                                            {activeTab === 'timeline' && (
+                                                <div className="animate-fade-in">
+                                                    <div className="space-y-2 pl-3 border-l-2 border-slate-200 ml-1.5">
+                                                        {[
+                                                            { year: '1945', title: 'Nascimento', desc: 'Chegada ao mundo, trazendo alegria para a família.' },
+                                                            { year: '1965', title: 'Casamento', desc: 'Uniu-se a José em uma cerimônia inesquecível.' },
+                                                            { year: '1970', title: 'Primeiro Filho', desc: 'A chegada do primeiro filho trouxe nova luz.' },
+                                                            { year: '2010', title: 'Viagem dos Sonhos', desc: 'A tão aguardada viagem com toda a família.' },
+                                                        ].map((ev, i) => (
+                                                            <div key={i} className="relative pl-4">
+                                                                <div className="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-amber-400 border-2 border-white ring-1 ring-amber-200" />
+                                                                <span className="text-[8px] font-bold text-amber-600">{ev.year}</span>
+                                                                <h4 className="text-[10px] font-bold text-slate-800">{ev.title}</h4>
+                                                                <p className="text-[9px] text-slate-500 leading-snug">{ev.desc}</p>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* ========= MEDIA TAB ========= */}
+                                            {activeTab === 'media' && (
+                                                <div className="animate-fade-in">
+                                                    {/* Photos section */}
+                                                    <div className="flex items-center gap-1.5 mb-2">
+                                                        <div className="w-4 h-4 bg-blue-100 rounded flex items-center justify-center">
+                                                            <ImageIcon size={8} className="text-blue-600" />
+                                                        </div>
+                                                        <span className="text-[9px] font-bold text-slate-800">Galeria de Fotos</span>
+                                                    </div>
+                                                    <div className="grid grid-cols-3 gap-1.5 mb-4">
+                                                        {[
+                                                            'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=400&auto=format&fit=crop',
+                                                            'https://images.unsplash.com/photo-1551843073-4a9a5b6fcd5f?q=80&w=400&auto=format&fit=crop',
+                                                            'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&w=400&auto=format&fit=crop',
+                                                            'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=400&auto=format&fit=crop',
+                                                            'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=400&auto=format&fit=crop',
+                                                            'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=400&auto=format&fit=crop',
+                                                        ].map((src, i) => (
+                                                            <div key={i} className="aspect-square rounded-xl overflow-hidden shadow-sm group">
+                                                                <img
+                                                                    src={src}
+                                                                    alt=""
+                                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                                    loading="lazy"
+                                                                />
+                                                            </div>
+                                                        ))}
+                                                    </div>
+
+                                                    {/* Videos section */}
+                                                    <div className="flex items-center gap-1.5 mb-2">
+                                                        <div className="w-4 h-4 bg-red-100 rounded flex items-center justify-center">
+                                                            <Video size={8} className="text-red-600" />
+                                                        </div>
+                                                        <span className="text-[9px] font-bold text-slate-800">Vídeos</span>
+                                                    </div>
+                                                    <div className="bg-slate-900 rounded-xl overflow-hidden shadow-md aspect-video flex items-center justify-center">
+                                                        <div className="text-center">
+                                                            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mx-auto mb-1">
+                                                                <div className="w-0 h-0 border-l-[8px] border-l-white border-t-[5px] border-t-transparent border-b-[5px] border-b-transparent ml-0.5" />
+                                                            </div>
+                                                            <span className="text-[8px] text-white/60">viagem_familia.mp4</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* ========= TRIBUTES TAB ========= */}
+                                            {activeTab === 'tributes' && (
+                                                <div className="animate-fade-in space-y-2">
+                                                    {[
+                                                        { name: 'Maria Silva', text: 'Vó Helena, saudades eternas. Obrigada por tudo! ❤️' },
+                                                        { name: 'Pedro S.', text: 'Sua memória vive em cada um de nós. Descanse em paz. 🕊️' },
+                                                        { name: 'Ana Clara', text: 'Nunca vou esquecer seus bolos de domingo. Te amo para sempre.' },
+                                                    ].map((tribute, i) => (
+                                                        <div key={i} className="bg-white rounded-xl border border-slate-100 shadow-sm p-3">
+                                                            <div className="flex items-center gap-2 mb-1.5">
+                                                                <div className="w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center">
+                                                                    <Heart size={10} className="text-brand-600" />
+                                                                </div>
+                                                                <span className="text-[9px] font-bold text-slate-800">{tribute.name}</span>
+                                                            </div>
+                                                            <p className="text-[9px] text-slate-600 leading-snug">{tribute.text}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -152,7 +232,7 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                 <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-28 h-1 bg-slate-600 rounded-full" />
                             </div>
 
-                            {/* Decorative elements behind phone */}
+                            {/* Decorative blurs behind phone */}
                             <div className="absolute -top-8 -right-8 w-32 h-32 bg-brand-600/10 rounded-full blur-2xl -z-10" />
                             <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-purple-600/10 rounded-full blur-2xl -z-10" />
                             <div className="absolute top-1/2 -right-4 w-20 h-20 bg-brand-400/10 rounded-full blur-xl -z-10" />
