@@ -42,10 +42,9 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
             lineHeight: '1.18',
           }}
         >
-          A memória de quem<br />
-          você ama merece<br />
+          Transforme lembranças<br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-purple-400">
-            viver para sempre.
+            em homenagens.
           </span>
         </h1>
 
@@ -54,7 +53,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
           className="max-w-xl mx-auto text-slate-400 mb-10 animate-slide-up leading-relaxed"
           style={{ animationDelay: '0.1s', fontSize: 'clamp(0.95rem, 2vw, 1.125rem)' }}
         >
-          Crie um memorial digital eterno com fotos, vídeos, histórias e um QR Code que pode ser acessado de qualquer lugar do mundo.
+          Mantenha as histórias de quem você ama vivas, acessível a qualquer momento, de qualquer lugar.
         </p>
 
         {/* CTAs */}
