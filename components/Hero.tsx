@@ -42,7 +42,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
             lineHeight: '1.18',
           }}
         >
-          Transforme lembranças<br />
+          Transforme lembranças{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-amber-400">
             em homenagens.
           </span>
