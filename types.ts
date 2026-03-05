@@ -76,6 +76,7 @@ export interface Memorial {
   is_public: boolean;
   cover_image_url: string | null;
   profile_image_url: string | null;
+  background_music_url: string | null;
   created_at: string;
   status?: boolean; // New field for Admin Dashboard (true = ON/Paid, false = OFF/Pending)
 }

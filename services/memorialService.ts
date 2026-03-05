@@ -15,6 +15,7 @@ const MOCK_MEMORIALS: Memorial[] = [
     status: true, // Approved
     cover_image_url: 'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=2525&auto=format&fit=crop',
     profile_image_url: 'https://images.unsplash.com/photo-1551843073-4a9a5b6fcd5f?q=80&w=987&auto=format&fit=crop',
+    background_music_url: null,
     created_at: new Date().toISOString()
   },
   {
@@ -29,6 +30,7 @@ const MOCK_MEMORIALS: Memorial[] = [
     status: true, // Approved
     cover_image_url: 'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2670&auto=format&fit=crop',
     profile_image_url: 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=2070&auto=format&fit=crop',
+    background_music_url: null,
     created_at: new Date().toISOString()
   },
   {
@@ -43,6 +45,7 @@ const MOCK_MEMORIALS: Memorial[] = [
     status: true, // Mock agora é true para aparecer na demo pública
     cover_image_url: 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?q=80&w=2669&auto=format&fit=crop',
     profile_image_url: 'https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?q=80&w=2069&auto=format&fit=crop',
+    background_music_url: null,
     created_at: new Date().toISOString()
   }
 ];
@@ -272,18 +275,23 @@ export const createMemorial = async (
   formData: MemorialFormData,
   userId: string,
   coverFile: File | null,
-  profileFile: File | null
+  profileFile: File | null,
+  musicFile: File | null = null
 ) => {
   try {
-    // 1. Upload Cover & Profile
+    // 1. Upload Cover, Profile & Music
     let coverUrl = null;
     let profileUrl = null;
+    let musicUrl = null;
 
     if (coverFile) {
       coverUrl = await uploadFile(coverFile, `${userId}/covers`);
     }
     if (profileFile) {
       profileUrl = await uploadFile(profileFile, `${userId}/profiles`);
+    }
+    if (musicFile) {
+      musicUrl = await uploadFile(musicFile, `${userId}/music`);
     }
 
     // 2. Insert Memorial Data
@@ -300,7 +308,8 @@ export const createMemorial = async (
           is_public: formData.isPublic,
           status: false, // Default to OFF/Pending until payment is approved by admin
           cover_image_url: coverUrl,
-          profile_image_url: profileUrl
+          profile_image_url: profileUrl,
+          background_music_url: musicUrl
         }
       ])
       .select()
@@ -337,10 +346,11 @@ export const updateMemorial = async (
   formData: MemorialFormData,
   coverFile: File | null,
   profileFile: File | null,
-  deletedMediaIds: string[] = []
+  deletedMediaIds: string[] = [],
+  musicFile: File | null = null
 ) => {
   try {
-    // 1. Handle New Cover/Profile Uploads
+    // 1. Handle New Cover/Profile/Music Uploads
     const updateData: any = {
       name: formData.name,
       relationship: formData.relationship,
@@ -358,6 +368,11 @@ export const updateMemorial = async (
     if (profileFile) {
       const url = await uploadFile(profileFile, `${userId}/profiles`);
       if (url) updateData.profile_image_url = url;
+    }
+
+    if (musicFile) {
+      const url = await uploadFile(musicFile, `${userId}/music`);
+      if (url) updateData.background_music_url = url;
     }
 
     // 2. Update Memorial Table

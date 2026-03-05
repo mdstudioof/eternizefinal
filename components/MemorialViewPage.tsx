@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   ArrowLeft,
   Calendar,
@@ -13,7 +13,9 @@ import {
   Music,
   Lock,
   AlertTriangle,
-  GitBranch
+  GitBranch,
+  Volume2,
+  VolumeX
 } from 'lucide-react';
 import { getMemorialFull } from '../services/memorialService';
 import { Memorial, TimelineEvent, MediaItem, FamilyTreeMember, FamilyRole } from '../types';
@@ -38,6 +40,8 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [expandedTimelineIds, setExpandedTimelineIds] = useState<Set<string>>(new Set());
+  const [isMusicPlaying, setIsMusicPlaying] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const loadMemorial = async () => {
@@ -152,8 +156,48 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
   // Determine if we have a top banner to adjust layout
   const hasTopBanner = isDemo || (!isApproved && !isDemo);
 
+  // Try autoplay music
+  const toggleMusic = () => {
+    if (!audioRef.current) return;
+    if (isMusicPlaying) {
+      audioRef.current.pause();
+      setIsMusicPlaying(false);
+    } else {
+      audioRef.current.play().then(() => setIsMusicPlaying(true)).catch(() => { });
+    }
+  };
+
+  // Attempt autoplay on mount
+  useEffect(() => {
+    if (memorial?.background_music_url && audioRef.current) {
+      audioRef.current.volume = 0.3;
+      audioRef.current.play()
+        .then(() => setIsMusicPlaying(true))
+        .catch(() => {
+          // Autoplay blocked by browser, user can click the button
+          setIsMusicPlaying(false);
+        });
+    }
+  }, [memorial?.background_music_url, loading]);
+
   return (
     <div className="min-h-screen bg-white animate-fade-in pb-24">
+
+      {/* Background Music Audio Element */}
+      {memorial.background_music_url && (
+        <audio ref={audioRef} src={memorial.background_music_url} loop preload="auto" />
+      )}
+
+      {/* Floating Music Button */}
+      {memorial.background_music_url && (
+        <button
+          onClick={toggleMusic}
+          className={`fixed bottom-6 right-6 z-[70] w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all ${isMusicPlaying ? 'bg-brand-600 text-white shadow-brand-300 animate-pulse' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}
+          title={isMusicPlaying ? 'Pausar música' : 'Tocar música'}
+        >
+          {isMusicPlaying ? <Volume2 size={20} /> : <VolumeX size={20} />}
+        </button>
+      )}
 
       {/* Pending Banner (Only visible to Owner/Admin if not approved) */}
       {!isApproved && !isDemo && (

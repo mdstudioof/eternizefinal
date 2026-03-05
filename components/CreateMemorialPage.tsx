@@ -18,7 +18,8 @@ import {
   CheckCircle,
   Clock,
   Calendar,
-  GitBranch
+  GitBranch,
+  Music
 } from 'lucide-react';
 import { MemorialFormData, MediaItem, TimelineEvent, FamilyTreeMember } from '../types';
 import { generateBiography } from '../services/geminiService';
@@ -41,9 +42,11 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
   const [paymentLinkOpened, setPaymentLinkOpened] = useState(false);
   const [showCheckoutIframe, setShowCheckoutIframe] = useState(false);
 
-  // File Objects for Cover/Profile
+  // File Objects for Cover/Profile/Music
   const [coverFile, setCoverFile] = useState<File | null>(null);
   const [profileFile, setProfileFile] = useState<File | null>(null);
+  const [musicFile, setMusicFile] = useState<File | null>(null);
+  const [musicFileName, setMusicFileName] = useState<string | null>(null);
 
   // Track deleted items for Edit mode
   const [deletedMediaIds, setDeletedMediaIds] = useState<string[]>([]);
@@ -79,6 +82,7 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
   const galleryInputRef = useRef<HTMLInputElement>(null);
   const videoInputRef = useRef<HTMLInputElement>(null);
   const audioInputRef = useRef<HTMLInputElement>(null);
+  const musicInputRef = useRef<HTMLInputElement>(null);
 
   // --- Effect: Load Data if Editing ---
   useEffect(() => {
@@ -280,7 +284,7 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
     setIsSaving(true);
 
     try {
-      const result = await createMemorial(formData, user.id, coverFile, profileFile);
+      const result = await createMemorial(formData, user.id, coverFile, profileFile, musicFile);
 
       if (!result.success || !result.memorialId) {
         throw new Error("Erro ao salvar dados do memorial.");
@@ -330,7 +334,8 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
         formData,
         coverFile,
         profileFile,
-        deletedMediaIds
+        deletedMediaIds,
+        musicFile
       );
 
       if (!result.success) {
@@ -524,6 +529,12 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
       <input type="file" ref={galleryInputRef} className="hidden" accept="image/*" multiple onChange={(e) => handleFileSelect(e, 'gallery')} />
       <input type="file" ref={videoInputRef} className="hidden" accept="video/*" multiple onChange={(e) => handleFileSelect(e, 'video')} />
       <input type="file" ref={audioInputRef} className="hidden" accept="audio/*" multiple onChange={(e) => handleFileSelect(e, 'audio')} />
+      <input type="file" ref={musicInputRef} className="hidden" accept="audio/*" onChange={(e) => {
+        if (e.target.files && e.target.files[0]) {
+          setMusicFile(e.target.files[0]);
+          setMusicFileName(e.target.files[0].name);
+        }
+      }} />
 
       {/* Payment Modal (Also available in Edit View if user clicks main save button and it's a new memorial) */}
       {showPaymentModal && (
@@ -904,6 +915,33 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
                 ))}
               </div>
             </div>
+          </div>
+
+          {/* Background Music Upload */}
+          <div className="mt-6">
+            <h3 className="text-sm font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <Music size={16} className="text-brand-500" />
+              MÚSICA DE FUNDO
+            </h3>
+            <p className="text-xs text-slate-500 mb-3">Escolha uma música que será tocada automaticamente quando alguém visitar o memorial.</p>
+            {musicFileName ? (
+              <div className="flex justify-between items-center p-3 bg-brand-50 border border-brand-200 rounded-xl group">
+                <div className="flex items-center gap-2 overflow-hidden">
+                  <Music size={16} className="text-brand-500 shrink-0" />
+                  <span className="text-sm font-medium text-brand-700 truncate">{musicFileName}</span>
+                </div>
+                <button onClick={() => { setMusicFile(null); setMusicFileName(null); }} className="text-slate-400 hover:text-red-500">
+                  <Trash2 size={16} />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={() => musicInputRef.current?.click()}
+                className="w-full flex items-center justify-center gap-2 px-4 py-4 border-2 border-dashed border-slate-300 rounded-xl hover:bg-slate-50 hover:border-brand-400 hover:text-brand-600 transition-all font-medium text-slate-600"
+              >
+                <Music size={20} /> Adicionar Música de Fundo
+              </button>
+            )}
           </div>
         </div>
 
