@@ -11,7 +11,7 @@ import {
   ArrowLeft,
   Save,
   CreditCard,
-  ExternalLink,
+
   Globe,
   Lock,
   X,
@@ -39,6 +39,7 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
   const [isSaving, setIsSaving] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [paymentLinkOpened, setPaymentLinkOpened] = useState(false);
+  const [showCheckoutIframe, setShowCheckoutIframe] = useState(false);
 
   // File Objects for Cover/Profile
   const [coverFile, setCoverFile] = useState<File | null>(null);
@@ -306,8 +307,7 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
   };
 
   const handleOpenPayment = () => {
-    const paymentUrl = (window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823";
-    window.open(paymentUrl, '_blank');
+    setShowCheckoutIframe(true);
     setPaymentLinkOpened(true);
   };
 
@@ -363,55 +363,87 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
         {/* Payment Modal */}
         {showPaymentModal && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-sm" onClick={() => setShowPaymentModal(false)}></div>
-            <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 relative z-10 animate-slide-up">
+            <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-sm" onClick={() => { if (!showCheckoutIframe) setShowPaymentModal(false); }}></div>
+            <div className={`bg-white rounded-3xl shadow-2xl relative z-10 animate-slide-up transition-all duration-300 ${showCheckoutIframe ? 'w-full max-w-3xl h-[90vh] flex flex-col' : 'w-full max-w-md p-6'}`}>
               <button
-                onClick={() => setShowPaymentModal(false)}
-                className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
+                onClick={() => { setShowCheckoutIframe(false); setShowPaymentModal(false); }}
+                className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 z-20"
               >
                 <X size={24} />
               </button>
 
-              <div className="text-center mb-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
-                  <CheckCircle size={32} />
-                </div>
-                <h3 className="text-2xl font-bold text-slate-900">Memorial Salvo!</h3>
-                <p className="text-slate-500 mt-2">
-                  Seu memorial foi salvo com sucesso. Agora realize o pagamento para ativá-lo.
-                </p>
-              </div>
-
-              <div className="space-y-4">
-                <button
-                  onClick={handleOpenPayment}
-                  className="w-full py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand-200"
-                >
-                  <ExternalLink size={20} />
-                  Ir para Pagamento (Cakto)
-                </button>
-
-                {paymentLinkOpened && (
-                  <div className="animate-fade-in pt-2">
-                    <p className="text-sm text-center text-slate-500 mb-3">
-                      Após o pagamento, seu memorial será ativado automaticamente.
+              {!showCheckoutIframe ? (
+                <>
+                  <div className="text-center mb-6">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
+                      <CheckCircle size={32} />
+                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900">Memorial Salvo!</h3>
+                    <p className="text-slate-500 mt-2">
+                      Seu memorial foi salvo com sucesso. Agora realize o pagamento para ativá-lo.
                     </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <button
+                      onClick={handleOpenPayment}
+                      className="w-full py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand-200"
+                    >
+                      <CreditCard size={20} />
+                      Ir para Pagamento
+                    </button>
+
+                    <p className="text-xs text-center text-slate-400 mt-4">
+                      Clique acima para abrir a página de pagamento.
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 flex-shrink-0">
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => setShowCheckoutIframe(false)}
+                        className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500 transition-colors"
+                      >
+                        <ArrowLeft size={20} />
+                      </button>
+                      <div>
+                        <h3 className="text-lg font-bold text-slate-900">Pagamento Seguro</h3>
+                        <p className="text-xs text-slate-400">Complete o pagamento abaixo para ativar seu memorial</p>
+                      </div>
+                    </div>
+                    <div className="w-8" />
+                  </div>
+
+                  <div className="flex-1 relative overflow-hidden rounded-b-3xl">
+                    <iframe
+                      src={(window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823"}
+                      className="w-full h-full border-0"
+                      title="Checkout Cakto"
+                      allow="payment"
+                    />
+                  </div>
+
+                  <div className="px-6 py-4 border-t border-slate-200 flex-shrink-0 flex flex-col sm:flex-row items-center gap-3">
                     <button
                       onClick={handlePaymentDone}
-                      className="w-full py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md"
+                      className="w-full sm:w-auto flex-1 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md"
                     >
                       <CheckCircle size={20} />
-                      Concluir
+                      Já realizei o pagamento
                     </button>
+                    <a
+                      href={(window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823"}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-slate-400 hover:text-brand-600 underline transition-colors whitespace-nowrap"
+                    >
+                      Abrir em nova aba
+                    </a>
                   </div>
-                )}
-
-                {!paymentLinkOpened && (
-                  <p className="text-xs text-center text-slate-400 mt-4">
-                    Clique acima para abrir a página de pagamento.
-                  </p>
-                )}
-              </div>
+                </>
+              )}
             </div>
           </div>
         )}
@@ -488,55 +520,87 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
       {/* Payment Modal (Also available in Edit View if user clicks main save button and it's a new memorial) */}
       {showPaymentModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-sm" onClick={() => setShowPaymentModal(false)}></div>
-          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 relative z-10 animate-slide-up">
+          <div className="absolute inset-0 bg-slate-900/70 backdrop-blur-sm" onClick={() => { if (!showCheckoutIframe) setShowPaymentModal(false); }}></div>
+          <div className={`bg-white rounded-3xl shadow-2xl relative z-10 animate-slide-up transition-all duration-300 ${showCheckoutIframe ? 'w-full max-w-3xl h-[90vh] flex flex-col' : 'w-full max-w-md p-6'}`}>
             <button
-              onClick={() => setShowPaymentModal(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
+              onClick={() => { setShowCheckoutIframe(false); setShowPaymentModal(false); }}
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 z-20"
             >
               <X size={24} />
             </button>
 
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
-                <CheckCircle size={32} />
-              </div>
-              <h3 className="text-2xl font-bold text-slate-900">Memorial Salvo!</h3>
-              <p className="text-slate-500 mt-2">
-                Seu memorial foi salvo com sucesso. Agora realize o pagamento para ativá-lo.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <button
-                onClick={handleOpenPayment}
-                className="w-full py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand-200"
-              >
-                <ExternalLink size={20} />
-                Ir para Pagamento (Cakto)
-              </button>
-
-              {paymentLinkOpened && (
-                <div className="animate-fade-in pt-2">
-                  <p className="text-sm text-center text-slate-500 mb-3">
-                    Após o pagamento, seu memorial será ativado automaticamente.
+            {!showCheckoutIframe ? (
+              <>
+                <div className="text-center mb-6">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
+                    <CheckCircle size={32} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-slate-900">Memorial Salvo!</h3>
+                  <p className="text-slate-500 mt-2">
+                    Seu memorial foi salvo com sucesso. Agora realize o pagamento para ativá-lo.
                   </p>
+                </div>
+
+                <div className="space-y-4">
+                  <button
+                    onClick={handleOpenPayment}
+                    className="w-full py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-lg shadow-brand-200"
+                  >
+                    <CreditCard size={20} />
+                    Ir para Pagamento
+                  </button>
+
+                  <p className="text-xs text-center text-slate-400 mt-4">
+                    Clique acima para abrir a página de pagamento.
+                  </p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 flex-shrink-0">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setShowCheckoutIframe(false)}
+                      className="p-1.5 hover:bg-slate-100 rounded-lg text-slate-500 transition-colors"
+                    >
+                      <ArrowLeft size={20} />
+                    </button>
+                    <div>
+                      <h3 className="text-lg font-bold text-slate-900">Pagamento Seguro</h3>
+                      <p className="text-xs text-slate-400">Complete o pagamento abaixo para ativar seu memorial</p>
+                    </div>
+                  </div>
+                  <div className="w-8" />
+                </div>
+
+                <div className="flex-1 relative overflow-hidden rounded-b-3xl">
+                  <iframe
+                    src={(window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823"}
+                    className="w-full h-full border-0"
+                    title="Checkout Cakto"
+                    allow="payment"
+                  />
+                </div>
+
+                <div className="px-6 py-4 border-t border-slate-200 flex-shrink-0 flex flex-col sm:flex-row items-center gap-3">
                   <button
                     onClick={handlePaymentDone}
-                    className="w-full py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md"
+                    className="w-full sm:w-auto flex-1 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md"
                   >
                     <CheckCircle size={20} />
-                    Concluir
+                    Já realizei o pagamento
                   </button>
+                  <a
+                    href={(window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823"}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-xs text-slate-400 hover:text-brand-600 underline transition-colors whitespace-nowrap"
+                  >
+                    Abrir em nova aba
+                  </a>
                 </div>
-              )}
-
-              {!paymentLinkOpened && (
-                <p className="text-xs text-center text-slate-400 mt-4">
-                  Clique acima para abrir a página de pagamento.
-                </p>
-              )}
-            </div>
+              </>
+            )}
           </div>
         </div>
       )}
