@@ -24,7 +24,10 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
               <span className="text-sm font-semibold tracking-wide">Acessível em qualquer lugar do mundo</span>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h2
+              className="font-bold text-white mb-6 leading-tight"
+              style={{ fontSize: 'clamp(2.25rem, 7vw, 3rem)' }}
+            >
               Uma homenagem eterna, <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-purple-400">
                 ao alcance de todos.

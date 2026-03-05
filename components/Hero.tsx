@@ -28,7 +28,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
         <div className="absolute -bottom-[10%] left-1/3 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen"></div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-6 sm:px-8 text-center relative z-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 text-center relative z-10">
 
         {/*
           Título em 3 linhas — fluid typography via clamp.
@@ -38,7 +38,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
         <h1
           className="font-extrabold text-white tracking-tight mb-6 animate-slide-up"
           style={{
-            fontSize: 'clamp(2.2rem, 6vw, 4.5rem)',
+            fontSize: 'clamp(2.75rem, 8vw, 4.5rem)',
             lineHeight: '1.18',
           }}
         >
@@ -50,8 +50,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
 
         {/* Subtítulo */}
         <p
-          className="max-w-xl mx-auto text-slate-400 mb-10 animate-slide-up leading-relaxed"
-          style={{ animationDelay: '0.1s', fontSize: 'clamp(0.95rem, 2vw, 1.125rem)' }}
+          className="max-w-xl mx-auto text-slate-400 mb-8 animate-slide-up leading-relaxed"
+          style={{ animationDelay: '0.1s', fontSize: 'clamp(1rem, 2.5vw, 1.125rem)' }}
         >
           Mantenha as histórias de quem você ama vivas, acessível a qualquer momento, de qualquer lugar.
         </p>
