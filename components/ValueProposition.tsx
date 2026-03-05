@@ -28,7 +28,7 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
               className="font-bold text-white mb-6 leading-tight"
               style={{ fontSize: 'clamp(2.25rem, 7vw, 3rem)' }}
             >
-              Uma homenagem eterna, <br />
+              Uma homenagem eterna,{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-amber-400">
                 ao alcance de todos.
               </span>
