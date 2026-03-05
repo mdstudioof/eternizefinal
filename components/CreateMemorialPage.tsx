@@ -313,7 +313,7 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
 
   const handlePaymentDone = () => {
     setShowPaymentModal(false);
-    alert("Memorial salvo! Assim que o pagamento for confirmado pela Cakto, seu memorial será ativado automaticamente.");
+    setShowCheckoutIframe(false);
     onCancel(); // Go back to dashboard
   };
 
@@ -425,22 +425,30 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
                     />
                   </div>
 
-                  <div className="px-6 py-4 border-t border-slate-200 flex-shrink-0 flex flex-col sm:flex-row items-center gap-3">
-                    <button
-                      onClick={handlePaymentDone}
-                      className="w-full sm:w-auto flex-1 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md"
-                    >
-                      <CheckCircle size={20} />
-                      Já realizei o pagamento
-                    </button>
-                    <a
-                      href={(window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823"}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-xs text-slate-400 hover:text-brand-600 underline transition-colors whitespace-nowrap"
-                    >
-                      Abrir em nova aba
-                    </a>
+                  <div className="px-6 py-4 border-t border-slate-200 flex-shrink-0">
+                    <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-xl p-3 mb-3">
+                      <Clock size={18} className="text-amber-500 flex-shrink-0" />
+                      <p className="text-xs text-amber-700">
+                        Após o pagamento, seu memorial será ativado <strong>automaticamente</strong> em poucos minutos.
+                      </p>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <button
+                        onClick={handlePaymentDone}
+                        className="text-sm text-slate-500 hover:text-brand-600 font-medium transition-colors flex items-center gap-1.5"
+                      >
+                        <ArrowLeft size={16} />
+                        Voltar para meus memoriais
+                      </button>
+                      <a
+                        href={(window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823"}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-xs text-slate-400 hover:text-brand-600 underline transition-colors whitespace-nowrap"
+                      >
+                        Abrir em nova aba
+                      </a>
+                    </div>
                   </div>
                 </>
               )}
@@ -582,22 +590,30 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
                   />
                 </div>
 
-                <div className="px-6 py-4 border-t border-slate-200 flex-shrink-0 flex flex-col sm:flex-row items-center gap-3">
-                  <button
-                    onClick={handlePaymentDone}
-                    className="w-full sm:w-auto flex-1 py-3 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-md"
-                  >
-                    <CheckCircle size={20} />
-                    Já realizei o pagamento
-                  </button>
-                  <a
-                    href={(window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823"}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-xs text-slate-400 hover:text-brand-600 underline transition-colors whitespace-nowrap"
-                  >
-                    Abrir em nova aba
-                  </a>
+                <div className="px-6 py-4 border-t border-slate-200 flex-shrink-0">
+                  <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-xl p-3 mb-3">
+                    <Clock size={18} className="text-amber-500 flex-shrink-0" />
+                    <p className="text-xs text-amber-700">
+                      Após o pagamento, seu memorial será ativado <strong>automaticamente</strong> em poucos minutos.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={handlePaymentDone}
+                      className="text-sm text-slate-500 hover:text-brand-600 font-medium transition-colors flex items-center gap-1.5"
+                    >
+                      <ArrowLeft size={16} />
+                      Voltar para meus memoriais
+                    </button>
+                    <a
+                      href={(window as any).__pendingPaymentUrl || "https://pay.cakto.com.br/39p2jpp_772823"}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs text-slate-400 hover:text-brand-600 underline transition-colors whitespace-nowrap"
+                    >
+                      Abrir em nova aba
+                    </a>
+                  </div>
                 </div>
               </>
             )}
