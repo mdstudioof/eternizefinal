@@ -11,7 +11,7 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] bg-brand-600/20 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-[10%] left-[10%] w-[400px] h-[400px] bg-purple-600/20 rounded-full blur-[100px]"></div>
+        <div className="absolute bottom-[10%] left-[10%] w-[400px] h-[400px] bg-amber-600/20 rounded-full blur-[100px]"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -29,7 +29,7 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
               style={{ fontSize: 'clamp(2.25rem, 7vw, 3rem)' }}
             >
               Uma homenagem eterna, <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-purple-400">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-amber-400">
                 ao alcance de todos.
               </span>
             </h2>
@@ -60,10 +60,10 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
 
           {/* Right Card (Price) */}
           <div className="relative w-full max-w-md">
-            <div className="absolute inset-0 bg-gradient-to-r from-brand-500 to-purple-600 rounded-3xl blur-xl opacity-30 transform translate-y-4"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-500 to-amber-600 rounded-3xl blur-xl opacity-30 transform translate-y-4"></div>
             <div className="relative bg-white rounded-3xl p-8 md:p-10 shadow-2xl border border-slate-100 text-center">
 
-              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-600 to-purple-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2 whitespace-nowrap">
+              <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-600 to-amber-600 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2 whitespace-nowrap">
                 <Sparkles size={16} className="fill-white" />
                 OFERTA ESPECIAL
               </div>

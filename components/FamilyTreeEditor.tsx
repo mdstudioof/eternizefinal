@@ -13,8 +13,8 @@ const ROLE_CONFIG: Record<FamilyRole, { color: string; bg: string; border: strin
     'Avô': { color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200', emoji: '👴', group: 0 },
     'Avó': { color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200', emoji: '👵', group: 0 },
     'Tio(a)': { color: 'text-orange-700', bg: 'bg-orange-50', border: 'border-orange-200', emoji: '🧑', group: 0 },
-    'Pai': { color: 'text-violet-700', bg: 'bg-violet-50', border: 'border-violet-200', emoji: '👨', group: 1 },
-    'Mãe': { color: 'text-violet-700', bg: 'bg-violet-50', border: 'border-violet-200', emoji: '👩', group: 1 },
+    'Pai': { color: 'text-teal-700', bg: 'bg-teal-50', border: 'border-teal-200', emoji: '👨', group: 1 },
+    'Mãe': { color: 'text-teal-700', bg: 'bg-teal-50', border: 'border-teal-200', emoji: '👩', group: 1 },
     'Cônjuge': { color: 'text-pink-700', bg: 'bg-pink-50', border: 'border-pink-200', emoji: '💑', group: 1 },
     'Irmão/Irmã': { color: 'text-blue-700', bg: 'bg-blue-50', border: 'border-blue-200', emoji: '🧑‍🤝‍🧑', group: 2 },
     'Filho(a)': { color: 'text-green-700', bg: 'bg-green-50', border: 'border-green-200', emoji: '👶', group: 2 },
@@ -174,7 +174,7 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
             {/* Empty state */}
             {!hasMembers && (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
-                    <div className="w-20 h-20 bg-violet-50 rounded-full flex items-center justify-center text-3xl mb-4 border-2 border-violet-100">
+                    <div className="w-20 h-20 bg-teal-50 rounded-full flex items-center justify-center text-3xl mb-4 border-2 border-teal-100">
                         🌳
                     </div>
                     <h3 className="text-slate-700 font-bold text-lg mb-1">Árvore vazia</h3>
@@ -188,7 +188,7 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
             <div className="border border-slate-200 rounded-2xl overflow-hidden">
                 <button
                     onClick={() => setIsFormOpen(p => !p)}
-                    className={`w-full flex items-center justify-between px-6 py-4 font-bold transition-colors ${isFormOpen ? 'bg-violet-600 text-white' : 'bg-slate-50 text-slate-700 hover:bg-violet-50 hover:text-violet-700'
+                    className={`w-full flex items-center justify-between px-6 py-4 font-bold transition-colors ${isFormOpen ? 'bg-teal-600 text-white' : 'bg-slate-50 text-slate-700 hover:bg-teal-50 hover:text-teal-700'
                         }`}
                 >
                     <div className="flex items-center gap-2">
@@ -219,7 +219,7 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
                                             onClick={() => setForm(p => ({ ...p, role }))}
                                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition-all ${isSelected
                                                     ? `${cfg.bg} ${cfg.color} ${cfg.border} shadow-sm scale-105`
-                                                    : 'bg-white text-slate-500 border-slate-200 hover:border-violet-300 hover:text-violet-600'
+                                                    : 'bg-white text-slate-500 border-slate-200 hover:border-teal-300 hover:text-teal-600'
                                                 }`}
                                         >
                                             <span>{cfg.emoji}</span>
@@ -242,7 +242,7 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
                                 onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
                                 className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition-all ${errors.name
                                         ? 'border-red-300 bg-red-50 focus:ring-2 focus:ring-red-200'
-                                        : 'border-slate-200 bg-slate-50 focus:bg-white focus:border-violet-400 focus:ring-4 focus:ring-violet-100'
+                                        : 'border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-400 focus:ring-4 focus:ring-teal-100'
                                     }`}
                             />
                             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
@@ -260,7 +260,7 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
                                     maxLength={4}
                                     value={form.birthYear}
                                     onChange={e => setForm(p => ({ ...p, birthYear: e.target.value }))}
-                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium outline-none focus:bg-white focus:border-violet-400 focus:ring-4 focus:ring-violet-100 transition-all"
+                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium outline-none focus:bg-white focus:border-teal-400 focus:ring-4 focus:ring-teal-100 transition-all"
                                 />
                             </div>
                             <div>
@@ -273,7 +273,7 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
                                     maxLength={4}
                                     value={form.deathYear}
                                     onChange={e => setForm(p => ({ ...p, deathYear: e.target.value }))}
-                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium outline-none focus:bg-white focus:border-violet-400 focus:ring-4 focus:ring-violet-100 transition-all"
+                                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium outline-none focus:bg-white focus:border-teal-400 focus:ring-4 focus:ring-teal-100 transition-all"
                                 />
                             </div>
                         </div>
@@ -288,7 +288,7 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
                                 placeholder="Ex: Morava em São Paulo, era professor..."
                                 value={form.notes}
                                 onChange={e => setForm(p => ({ ...p, notes: e.target.value }))}
-                                className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium outline-none focus:bg-white focus:border-violet-400 focus:ring-4 focus:ring-violet-100 transition-all"
+                                className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm font-medium outline-none focus:bg-white focus:border-teal-400 focus:ring-4 focus:ring-teal-100 transition-all"
                             />
                         </div>
 
@@ -304,7 +304,7 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
                             <button
                                 type="button"
                                 onClick={handleAdd}
-                                className="flex-1 py-3 rounded-xl bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-all shadow-lg shadow-violet-200 flex items-center justify-center gap-2"
+                                className="flex-1 py-3 rounded-xl bg-teal-600 text-white font-bold text-sm hover:bg-teal-700 transition-all shadow-lg shadow-teal-200 flex items-center justify-center gap-2"
                             >
                                 <Plus size={16} />
                                 Adicionar à Árvore

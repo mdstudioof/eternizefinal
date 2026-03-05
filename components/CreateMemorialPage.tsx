@@ -817,7 +817,7 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
         {/* Card 4: Family Tree */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-            <div className="p-2 bg-violet-50 rounded-lg text-violet-600">
+            <div className="p-2 bg-teal-50 rounded-lg text-teal-600">
               <GitBranch size={20} />
             </div>
             <div>

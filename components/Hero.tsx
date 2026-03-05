@@ -24,8 +24,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-[10%] left-1/4 w-[500px] h-[500px] bg-brand-600/20 rounded-full blur-[120px] animate-blob mix-blend-screen"></div>
-        <div className="absolute top-[20%] right-1/4 w-[400px] h-[400px] bg-purple-600/20 rounded-full blur-[100px] animate-blob animation-delay-2000 mix-blend-screen"></div>
-        <div className="absolute -bottom-[10%] left-1/3 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen"></div>
+        <div className="absolute top-[20%] right-1/4 w-[400px] h-[400px] bg-amber-600/20 rounded-full blur-[100px] animate-blob animation-delay-2000 mix-blend-screen"></div>
+        <div className="absolute -bottom-[10%] left-1/3 w-[600px] h-[600px] bg-teal-600/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen"></div>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-8 text-center relative z-10">
@@ -43,7 +43,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
           }}
         >
           Transforme lembranças<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-purple-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-amber-400">
             em homenagens.
           </span>
         </h1>

@@ -227,7 +227,7 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
 
         {/* Biography */}
         <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8 md:p-12 mb-12 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-400 via-purple-400 to-pink-400"></div>
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-400 via-amber-400 to-amber-300"></div>
           <p className="text-lg md:text-xl text-slate-700 leading-relaxed whitespace-pre-wrap font-serif">
             "{memorial.biography || "Uma vida para ser lembrada..."}"
           </p>
@@ -304,7 +304,7 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
         {familyTree.length > 0 && (
           <div className="mb-16 animate-slide-up">
             <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <div className="p-2 bg-violet-100 rounded-lg text-violet-600"><GitBranch size={24} /></div>
+              <div className="p-2 bg-teal-100 rounded-lg text-teal-600"><GitBranch size={24} /></div>
               Árvore Genealógica
             </h3>
 
@@ -324,8 +324,8 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
                 'Avô': { bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700', text: 'text-amber-700' },
                 'Avó': { bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700', text: 'text-amber-700' },
                 'Tio(a)': { bg: 'bg-orange-50', border: 'border-orange-200', badge: 'bg-orange-100 text-orange-700', text: 'text-orange-700' },
-                'Pai': { bg: 'bg-violet-50', border: 'border-violet-200', badge: 'bg-violet-100 text-violet-700', text: 'text-violet-700' },
-                'Mãe': { bg: 'bg-violet-50', border: 'border-violet-200', badge: 'bg-violet-100 text-violet-700', text: 'text-violet-700' },
+                'Pai': { bg: 'bg-teal-50', border: 'border-teal-200', badge: 'bg-teal-100 text-teal-700', text: 'text-teal-700' },
+                'Mãe': { bg: 'bg-teal-50', border: 'border-teal-200', badge: 'bg-teal-100 text-teal-700', text: 'text-teal-700' },
                 'Cônjuge': { bg: 'bg-pink-50', border: 'border-pink-200', badge: 'bg-pink-100 text-pink-700', text: 'text-pink-700' },
                 'Irmão/Irmã': { bg: 'bg-blue-50', border: 'border-blue-200', badge: 'bg-blue-100 text-blue-700', text: 'text-blue-700' },
                 'Filho(a)': { bg: 'bg-green-50', border: 'border-green-200', badge: 'bg-green-100 text-green-700', text: 'text-green-700' },
@@ -344,16 +344,16 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
                 2: 'Próxima Geração',
               };
               return (
-                <div className="bg-gradient-to-br from-violet-50 to-slate-50 rounded-3xl p-6 md:p-8 border border-violet-100 space-y-8">
+                <div className="bg-gradient-to-br from-teal-50 to-slate-50 rounded-3xl p-6 md:p-8 border border-teal-100 space-y-8">
                   {[0, 1, 2].map(grp => {
                     const grpMembers = grouped[grp];
                     if (grpMembers.length === 0) return null;
                     return (
                       <div key={grp}>
                         <div className="flex items-center gap-3 mb-4">
-                          <span className="text-xs font-bold text-violet-400 uppercase tracking-widest"
+                          <span className="text-xs font-bold text-teal-400 uppercase tracking-widest"
                           >{GROUP_LABELS[grp]}</span>
-                          <div className="flex-1 h-px bg-violet-100" />
+                          <div className="flex-1 h-px bg-teal-100" />
                         </div>
                         <div className="flex flex-wrap gap-4">
                           {grpMembers.map(member => {
@@ -387,9 +387,9 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
                         {grp < 2 && grouped[grp + 1]?.length > 0 && (
                           <div className="flex justify-center mt-6">
                             <div className="flex flex-col items-center gap-1">
-                              <div className="w-0.5 h-4 bg-violet-200 rounded-full" />
-                              <div className="w-2 h-2 rounded-full bg-violet-300" />
-                              <div className="w-0.5 h-4 bg-violet-200 rounded-full" />
+                              <div className="w-0.5 h-4 bg-teal-200 rounded-full" />
+                              <div className="w-2 h-2 rounded-full bg-teal-300" />
+                              <div className="w-0.5 h-4 bg-teal-200 rounded-full" />
                             </div>
                           </div>
                         )}
@@ -399,19 +399,19 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
 
                   {/* Central card - Homenageado */}
                   <div className="flex justify-center">
-                    <div className="flex flex-col items-center gap-2 p-5 rounded-2xl border-2 bg-white border-violet-300 shadow-lg shadow-violet-100 min-w-[130px] text-center relative">
-                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center px-3 py-0.5 rounded-full text-[10px] font-bold bg-violet-600 text-white shadow whitespace-nowrap">
+                    <div className="flex flex-col items-center gap-2 p-5 rounded-2xl border-2 bg-white border-teal-300 shadow-lg shadow-teal-100 min-w-[130px] text-center relative">
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center px-3 py-0.5 rounded-full text-[10px] font-bold bg-teal-600 text-white shadow whitespace-nowrap">
                         🕊️ Homenageado
                       </span>
-                      <div className="w-16 h-16 rounded-full bg-violet-50 border-2 border-violet-200 overflow-hidden mt-2">
+                      <div className="w-16 h-16 rounded-full bg-teal-50 border-2 border-teal-200 overflow-hidden mt-2">
                         {memorial.profile_image_url ? (
                           <img src={memorial.profile_image_url} alt={memorial.name} className="w-full h-full object-cover" />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-3xl">🕊️</div>
                         )}
                       </div>
-                      <p className="text-sm font-bold text-violet-800">{memorial.name}</p>
-                      <p className="text-[11px] text-violet-500 font-medium">
+                      <p className="text-sm font-bold text-teal-800">{memorial.name}</p>
+                      <p className="text-[11px] text-teal-500 font-medium">
                         {memorial.birth_date ? new Date(memorial.birth_date).getFullYear() : '?'}
                         {' – '}
                         {memorial.death_date ? new Date(memorial.death_date).getFullYear() : 'Presente'}
@@ -455,13 +455,13 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
             {audios.length > 0 && (
               <div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-                  <div className="p-2 bg-purple-100 rounded-lg text-purple-600"><Mic size={24} /></div>
+                  <div className="p-2 bg-teal-100 rounded-lg text-teal-600"><Mic size={24} /></div>
                   Áudios
                 </h3>
                 <div className="grid grid-cols-1 gap-4">
                   {audios.map(aud => (
                     <div key={aud.id} className="bg-white rounded-2xl p-4 border border-slate-100 shadow-sm hover:shadow-md transition-all flex items-center gap-4">
-                      <div className="w-12 h-12 bg-purple-50 rounded-full flex items-center justify-center text-purple-600 shadow-inner">
+                      <div className="w-12 h-12 bg-teal-50 rounded-full flex items-center justify-center text-teal-600 shadow-inner">
                         <Music size={20} />
                       </div>
                       <div className="flex-1">

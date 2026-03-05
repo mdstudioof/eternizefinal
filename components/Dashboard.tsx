@@ -354,7 +354,7 @@ const Dashboard: React.FC<DashboardProps> = ({
           {userCover ? (
             <img src={userCover} alt="Cover" className="w-full h-full object-cover" />
           ) : (
-            <div className="w-full h-full bg-gradient-to-r from-brand-600 to-purple-600 flex items-center justify-center">
+            <div className="w-full h-full bg-gradient-to-r from-brand-600 to-amber-600 flex items-center justify-center">
               <div className="text-white/20 font-bold text-4xl">EternizeQR</div>
             </div>
           )}

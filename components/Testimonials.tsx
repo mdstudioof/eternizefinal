@@ -107,7 +107,7 @@ const Testimonials: React.FC = () => {
             {/* Background decoration */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                 <div className="absolute -top-[20%] -left-[10%] w-[500px] h-[500px] bg-brand-600/10 rounded-full blur-[120px]" />
-                <div className="absolute -bottom-[20%] -right-[10%] w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]" />
+                <div className="absolute -bottom-[20%] -right-[10%] w-[400px] h-[400px] bg-amber-600/10 rounded-full blur-[100px]" />
             </div>
 
             <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-10">
@@ -135,7 +135,7 @@ const Testimonials: React.FC = () => {
                         {/* Progress bar */}
                         <div className="absolute top-0 left-0 h-[2px] bg-white/5 w-full">
                             <div
-                                className="h-full bg-gradient-to-r from-brand-400 to-purple-400 transition-none"
+                                className="h-full bg-gradient-to-r from-brand-400 to-amber-400 transition-none"
                                 style={{ width: `${progress}%` }}
                             />
                         </div>
