@@ -74,7 +74,7 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
 
               <div className="flex items-end justify-center gap-1 mb-6 text-slate-900">
                 <span className="text-3xl font-bold align-top mt-2">R$</span>
-                <span className="text-7xl font-extrabold tracking-tighter">50,00</span>
+                <span className="text-7xl font-extrabold tracking-tighter">59,90</span>
               </div>
 
               <p className="text-slate-500 text-sm mb-8 px-4 leading-snug">
