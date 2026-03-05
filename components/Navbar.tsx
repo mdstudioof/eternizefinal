@@ -21,12 +21,9 @@ const Navbar: React.FC<NavbarProps> = ({
   onOpenAdmin,
   onLogout
 }) => {
-  const { user, isAuthenticated, logout, isLoading } = useAuth();
+  const { user, isAuthenticated, isAdmin, logout, isLoading } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Simple admin check
-  const isAdmin = user?.email === 'admin@eternize.com.br';
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 

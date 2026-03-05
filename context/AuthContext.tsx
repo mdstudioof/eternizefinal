@@ -7,6 +7,7 @@ export interface User {
   name: string;
   email: string;
   avatar: string;
+  role: string;
 }
 
 interface AuthResponse {
@@ -18,6 +19,7 @@ interface AuthContextType {
   user: User | null;
   isLoading: boolean;
   error: string | null;
+  isAdmin: boolean;
   loginWithEmail: (email: string, password: string) => Promise<AuthResponse>;
   registerWithEmail: (email: string, password: string, name: string) => Promise<AuthResponse>;
   logout: () => Promise<void>;
@@ -57,12 +59,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, []);
 
-  const mapSupabaseUser = (sbUser: SupabaseUser) => {
+  const mapSupabaseUser = async (sbUser: SupabaseUser) => {
+    // Fetch role from profiles table
+    let userRole = 'user';
+    try {
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', sbUser.id)
+        .single();
+      if (profile?.role) {
+        userRole = profile.role;
+      }
+    } catch (err) {
+      console.warn('Could not fetch user role:', err);
+    }
+
     setUser({
       id: sbUser.id,
       name: sbUser.user_metadata.full_name || sbUser.email?.split('@')[0] || 'Usuário',
       email: sbUser.email || '',
-      avatar: sbUser.user_metadata.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${sbUser.email}`
+      avatar: sbUser.user_metadata.avatar_url || `https://api.dicebear.com/7.x/initials/svg?seed=${sbUser.email}`,
+      role: userRole
     });
   };
 
@@ -78,7 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (authError) {
         throw authError;
       }
-      
+
       setIsLoading(false); // Stop loading on success
       return { success: true };
     } catch (err: any) {
@@ -108,7 +126,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (authError) {
         throw authError;
       }
-      
+
       setIsLoading(false); // Stop loading on success
       return { success: true };
     } catch (err: any) {
@@ -136,15 +154,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const clearError = () => setError(null);
 
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      isLoading, 
+    <AuthContext.Provider value={{
+      user,
+      isLoading,
       error,
+      isAdmin: user?.role === 'admin',
       loginWithEmail,
       registerWithEmail,
       logout,
       isAuthenticated: !!user,
-      clearError 
+      clearError
     }}>
       {children}
     </AuthContext.Provider>

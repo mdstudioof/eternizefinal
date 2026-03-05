@@ -25,7 +25,7 @@ interface MemorialViewPageProps {
 }
 
 const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack }) => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -127,7 +127,6 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
   }
 
   // --- ACCESS CONTROL LOGIC ---
-  const isAdmin = user?.email === 'admin@eternize.com.br';
   const isOwner = user?.id === memorial.user_id;
   const isApproved = memorial.status === true;
   const isDemo = memorial.id.startsWith('demo-'); // Allow all users to see demos
