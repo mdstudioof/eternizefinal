@@ -101,6 +101,19 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
     loadMemorial();
   }, [memorialId]);
 
+  // Attempt autoplay on mount (must be before conditional returns to respect Rules of Hooks)
+  useEffect(() => {
+    if (memorial?.background_music_url && audioRef.current) {
+      audioRef.current.volume = 0.3;
+      audioRef.current.play()
+        .then(() => setIsMusicPlaying(true))
+        .catch(() => {
+          // Autoplay blocked by browser, user can click the button
+          setIsMusicPlaying(false);
+        });
+    }
+  }, [memorial?.background_music_url, loading]);
+
   const toggleTimelineExpand = (id: string) => {
     setExpandedTimelineIds(prev => {
       const newSet = new Set(prev);
@@ -166,19 +179,6 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
       audioRef.current.play().then(() => setIsMusicPlaying(true)).catch(() => { });
     }
   };
-
-  // Attempt autoplay on mount
-  useEffect(() => {
-    if (memorial?.background_music_url && audioRef.current) {
-      audioRef.current.volume = 0.3;
-      audioRef.current.play()
-        .then(() => setIsMusicPlaying(true))
-        .catch(() => {
-          // Autoplay blocked by browser, user can click the button
-          setIsMusicPlaying(false);
-        });
-    }
-  }, [memorial?.background_music_url, loading]);
 
   return (
     <div className="min-h-screen bg-white animate-fade-in pb-24">
