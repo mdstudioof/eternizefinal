@@ -124,7 +124,7 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                                 <div className="animate-fade-in">
                                                     {/* Biography Card — same style as MemorialViewPage */}
                                                     <div className="bg-white rounded-2xl shadow-md shadow-slate-100/80 border border-slate-100 p-4 relative overflow-hidden">
-                                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-400 via-amber-400 to-amber-300" />
+                                                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-400 via-rose-300 to-rose-200" />
                                                         <p className="text-[10px] text-slate-700 leading-relaxed whitespace-pre-wrap font-serif mt-1">
                                                             "Helena foi uma mulher de fibra, amorosa e cheia de vida. Dedicou seus dias a cuidar da família e das suas amadas orquídeas. Seu bolo de fubá nas tardes de domingo deixará saudades eternas. Ensinou a todos nós o valor da honestidade e do trabalho duro."
                                                         </p>
@@ -145,8 +145,8 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                                             { year: '2010', title: 'Viagem dos Sonhos', desc: 'A tão aguardada viagem com toda a família reunida.' },
                                                         ].map((ev, i) => (
                                                             <div key={i} className="relative pl-4">
-                                                                <div className="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-amber-400 border-2 border-white ring-1 ring-amber-200" />
-                                                                <span className="text-[8px] font-bold text-amber-600">{ev.year}</span>
+                                                                <div className="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-rose-300 border-2 border-white ring-1 ring-rose-200" />
+                                                                <span className="text-[8px] font-bold text-rose-500">{ev.year}</span>
                                                                 <h4 className="text-[10px] font-bold text-slate-800">{ev.title}</h4>
                                                                 <p className="text-[9px] text-slate-500 leading-snug">{ev.desc}</p>
                                                             </div>
@@ -231,7 +231,7 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
 
                             {/* Decorative blurs behind phone */}
                             <div className="absolute -top-8 -right-8 w-32 h-32 bg-brand-600/10 rounded-full blur-2xl -z-10" />
-                            <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-amber-600/10 rounded-full blur-2xl -z-10" />
+                            <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-rose-400/10 rounded-full blur-2xl -z-10" />
                             <div className="absolute top-1/2 -right-4 w-20 h-20 bg-brand-400/10 rounded-full blur-xl -z-10" />
                         </div>
                     </div>

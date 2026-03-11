@@ -103,11 +103,11 @@ const Testimonials: React.FC = () => {
     const t = testimonials[current];
 
     return (
-        <section className="bg-slate-900 py-20 lg:py-28 relative overflow-hidden">
+        <section className="bg-indigo-950 py-20 lg:py-28 relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                 <div className="absolute -top-[20%] -left-[10%] w-[500px] h-[500px] bg-brand-600/10 rounded-full blur-[120px]" />
-                <div className="absolute -bottom-[20%] -right-[10%] w-[400px] h-[400px] bg-amber-600/10 rounded-full blur-[100px]" />
+                <div className="absolute -bottom-[20%] -right-[10%] w-[400px] h-[400px] bg-rose-400/10 rounded-full blur-[100px]" />
             </div>
 
             <div className="max-w-5xl mx-auto px-6 sm:px-8 relative z-10">
@@ -135,7 +135,7 @@ const Testimonials: React.FC = () => {
                         {/* Progress bar */}
                         <div className="absolute top-0 left-0 h-[2px] bg-white/5 w-full">
                             <div
-                                className="h-full bg-gradient-to-r from-brand-400 to-amber-400 transition-none"
+                                className="h-full bg-gradient-to-r from-brand-400 to-rose-300 transition-none"
                                 style={{ width: `${progress}%` }}
                             />
                         </div>
@@ -148,7 +148,7 @@ const Testimonials: React.FC = () => {
                         {/* Stars */}
                         <div className="flex gap-1 mb-5">
                             {Array.from({ length: t.stars }).map((_, i) => (
-                                <Star key={i} size={16} className="fill-amber-400 text-amber-400" />
+                                <Star key={i} size={16} className="fill-rose-300 text-rose-300" />
                             ))}
                         </div>
 

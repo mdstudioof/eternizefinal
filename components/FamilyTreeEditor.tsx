@@ -10,8 +10,8 @@ interface FamilyTreeEditorProps {
 
 // Role configuration: color, emoji, generation group
 const ROLE_CONFIG: Record<FamilyRole, { color: string; bg: string; border: string; emoji: string; group: number }> = {
-    'Avô': { color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200', emoji: '👴', group: 0 },
-    'Avó': { color: 'text-amber-700', bg: 'bg-amber-50', border: 'border-amber-200', emoji: '👵', group: 0 },
+    'Avô': { color: 'text-rose-700', bg: 'bg-rose-50', border: 'border-rose-200', emoji: '👴', group: 0 },
+    'Avó': { color: 'text-rose-700', bg: 'bg-rose-50', border: 'border-rose-200', emoji: '👵', group: 0 },
     'Tio(a)': { color: 'text-orange-700', bg: 'bg-orange-50', border: 'border-orange-200', emoji: '🧑', group: 0 },
     'Pai': { color: 'text-teal-700', bg: 'bg-teal-50', border: 'border-teal-200', emoji: '👨', group: 1 },
     'Mãe': { color: 'text-teal-700', bg: 'bg-teal-50', border: 'border-teal-200', emoji: '👩', group: 1 },
@@ -218,8 +218,8 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
                                             type="button"
                                             onClick={() => setForm(p => ({ ...p, role }))}
                                             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border text-xs font-bold transition-all ${isSelected
-                                                    ? `${cfg.bg} ${cfg.color} ${cfg.border} shadow-sm scale-105`
-                                                    : 'bg-white text-slate-500 border-slate-200 hover:border-teal-300 hover:text-teal-600'
+                                                ? `${cfg.bg} ${cfg.color} ${cfg.border} shadow-sm scale-105`
+                                                : 'bg-white text-slate-500 border-slate-200 hover:border-teal-300 hover:text-teal-600'
                                                 }`}
                                         >
                                             <span>{cfg.emoji}</span>
@@ -241,8 +241,8 @@ const FamilyTreeEditor: React.FC<FamilyTreeEditorProps> = ({ members, onChange, 
                                 value={form.name}
                                 onChange={e => setForm(p => ({ ...p, name: e.target.value }))}
                                 className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition-all ${errors.name
-                                        ? 'border-red-300 bg-red-50 focus:ring-2 focus:ring-red-200'
-                                        : 'border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-400 focus:ring-4 focus:ring-teal-100'
+                                    ? 'border-red-300 bg-red-50 focus:ring-2 focus:ring-red-200'
+                                    : 'border-slate-200 bg-slate-50 focus:bg-white focus:border-teal-400 focus:ring-4 focus:ring-teal-100'
                                     }`}
                             />
                             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}

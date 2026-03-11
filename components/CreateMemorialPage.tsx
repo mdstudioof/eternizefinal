@@ -431,9 +431,9 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
                   </div>
 
                   <div className="px-6 py-4 border-t border-slate-200 flex-shrink-0">
-                    <div className="flex items-center gap-3 bg-amber-50 border border-amber-200 rounded-xl p-3 mb-3">
-                      <Clock size={18} className="text-amber-500 flex-shrink-0" />
-                      <p className="text-xs text-amber-700">
+                    <div className="flex items-center gap-3 bg-rose-50 border border-rose-200 rounded-xl p-3 mb-3">
+                      <Clock size={18} className="text-rose-400 flex-shrink-0" />
+                      <p className="text-xs text-rose-600">
                         Após o pagamento, seu memorial será ativado <strong>automaticamente</strong> em poucos minutos.
                       </p>
                     </div>
@@ -748,7 +748,7 @@ const CreateMemorialPage: React.FC<CreateMemorialPageProps> = ({ onCancel, memor
         {/* Card 3: Timeline */}
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
           <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
-            <div className="p-2 bg-amber-50 rounded-lg text-amber-600">
+            <div className="p-2 bg-rose-50 rounded-lg text-rose-500">
               <Calendar size={20} />
             </div>
             <h2 className="text-xl font-bold text-slate-900">Linha do Tempo</h2>

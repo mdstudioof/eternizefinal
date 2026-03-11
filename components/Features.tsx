@@ -48,7 +48,7 @@ const Features: React.FC = () => {
       {/* Decorative Background Blurs */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[20%] left-[10%] w-[500px] h-[500px] bg-brand-200/40 rounded-full blur-[100px] mix-blend-multiply"></div>
-        <div className="absolute bottom-[20%] right-[10%] w-[500px] h-[500px] bg-amber-200/40 rounded-full blur-[100px] mix-blend-multiply"></div>
+        <div className="absolute bottom-[20%] right-[10%] w-[500px] h-[500px] bg-rose-200/40 rounded-full blur-[100px] mix-blend-multiply"></div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -56,7 +56,7 @@ const Features: React.FC = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
-            Recursos <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-amber-600">Especiais</span>
+            Recursos <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-rose-400">Especiais</span>
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
             Tudo que você precisa para criar um memorial digital completo, emocionante e duradouro.
@@ -92,7 +92,7 @@ const Features: React.FC = () => {
               </div>
 
               {/* Bottom Line Indicator */}
-              <div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-brand-500 to-amber-500 group-hover:w-full transition-all duration-700 ease-out"></div>
+              <div className="absolute bottom-0 left-0 w-0 h-1 bg-gradient-to-r from-brand-500 to-rose-400 group-hover:w-full transition-all duration-700 ease-out"></div>
             </div>
           ))}
         </div>

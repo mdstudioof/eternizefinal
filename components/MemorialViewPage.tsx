@@ -270,7 +270,7 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
 
         {/* Biography */}
         <div className="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8 md:p-12 mb-12 text-center relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-400 via-amber-400 to-amber-300"></div>
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand-400 via-rose-300 to-rose-200"></div>
           <p className="text-lg md:text-xl text-slate-700 leading-relaxed whitespace-pre-wrap font-serif">
             "{memorial.biography || "Uma vida para ser lembrada..."}"
           </p>
@@ -307,7 +307,7 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
         {timeline.length > 0 && (
           <div className="mb-16 animate-slide-up">
             <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <div className="p-2 bg-amber-100 rounded-lg text-amber-600"><Calendar size={24} /></div>
+              <div className="p-2 bg-rose-100 rounded-lg text-rose-500"><Calendar size={24} /></div>
               Linha do Tempo
             </h3>
             <div className="space-y-4 pl-4 border-l-2 border-slate-200 ml-3">
@@ -319,15 +319,15 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
                     className="relative pl-8 cursor-pointer group"
                     onClick={() => toggleTimelineExpand(event.id)}
                   >
-                    <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 border-white ring-2 transition-all duration-300 ${isExpanded ? 'bg-amber-500 ring-amber-200 scale-125' : 'bg-slate-300 ring-transparent group-hover:bg-amber-400'}`}></div>
+                    <div className={`absolute -left-[9px] top-1 w-4 h-4 rounded-full border-2 border-white ring-2 transition-all duration-300 ${isExpanded ? 'bg-rose-400 ring-rose-200 scale-125' : 'bg-slate-300 ring-transparent group-hover:bg-rose-300'}`}></div>
 
-                    <div className={`rounded-2xl border transition-all duration-300 overflow-hidden ${isExpanded ? 'bg-white border-amber-100 shadow-lg shadow-amber-50/50 p-6' : 'bg-transparent border-transparent hover:bg-slate-50 p-2'}`}>
+                    <div className={`rounded-2xl border transition-all duration-300 overflow-hidden ${isExpanded ? 'bg-white border-rose-100 shadow-lg shadow-rose-50/50 p-6' : 'bg-transparent border-transparent hover:bg-slate-50 p-2'}`}>
                       <div className="flex justify-between items-center">
                         <div>
-                          <span className={`font-bold text-sm block mb-1 transition-colors ${isExpanded ? 'text-amber-600' : 'text-slate-500'}`}>{event.year}</span>
+                          <span className={`font-bold text-sm block mb-1 transition-colors ${isExpanded ? 'text-rose-500' : 'text-slate-500'}`}>{event.year}</span>
                           <h4 className={`text-xl font-bold transition-colors ${isExpanded ? 'text-slate-900' : 'text-slate-700'}`}>{event.title}</h4>
                         </div>
-                        <ChevronDown className={`text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-amber-500' : ''}`} />
+                        <ChevronDown className={`text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180 text-rose-400' : ''}`} />
                       </div>
 
                       <div className={`grid transition-[grid-template-rows] duration-500 ease-out ${isExpanded ? 'grid-rows-[1fr] mt-4' : 'grid-rows-[0fr]'}`}>
@@ -364,8 +364,8 @@ const MemorialViewPage: React.FC<MemorialViewPageProps> = ({ memorialId, onBack 
                 'Tio(a)': '🧑', 'Sobrinho(a)': '👦', 'Outro': '👤'
               };
               const ROLE_COLORS: Record<string, { bg: string; border: string; badge: string; text: string }> = {
-                'Avô': { bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700', text: 'text-amber-700' },
-                'Avó': { bg: 'bg-amber-50', border: 'border-amber-200', badge: 'bg-amber-100 text-amber-700', text: 'text-amber-700' },
+                'Avô': { bg: 'bg-rose-50', border: 'border-rose-200', badge: 'bg-rose-100 text-rose-700', text: 'text-rose-700' },
+                'Avó': { bg: 'bg-rose-50', border: 'border-rose-200', badge: 'bg-rose-100 text-rose-700', text: 'text-rose-700' },
                 'Tio(a)': { bg: 'bg-orange-50', border: 'border-orange-200', badge: 'bg-orange-100 text-orange-700', text: 'text-orange-700' },
                 'Pai': { bg: 'bg-teal-50', border: 'border-teal-200', badge: 'bg-teal-100 text-teal-700', text: 'text-teal-700' },
                 'Mãe': { bg: 'bg-teal-50', border: 'border-teal-200', badge: 'bg-teal-100 text-teal-700', text: 'text-teal-700' },

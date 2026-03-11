@@ -9,7 +9,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onViewDemo }) => {
   return (
-    <section className="relative overflow-hidden pt-20 pb-24 lg:pt-36 lg:pb-32 bg-slate-900">
+    <section className="relative overflow-hidden pt-20 pb-24 lg:pt-36 lg:pb-32 bg-indigo-950">
 
       {/* Background Image with Gradient Overlay */}
       <div className="absolute inset-0 w-full h-full">
@@ -18,14 +18,14 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
           alt=""
           className="absolute inset-0 w-full h-full object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/70 to-slate-900"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/80 via-indigo-950/70 to-indigo-950"></div>
       </div>
 
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-[10%] left-1/4 w-[500px] h-[500px] bg-brand-600/20 rounded-full blur-[120px] animate-blob mix-blend-screen"></div>
-        <div className="absolute top-[20%] right-1/4 w-[400px] h-[400px] bg-amber-600/20 rounded-full blur-[100px] animate-blob animation-delay-2000 mix-blend-screen"></div>
-        <div className="absolute -bottom-[10%] left-1/3 w-[600px] h-[600px] bg-teal-600/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen"></div>
+        <div className="absolute top-[20%] right-1/4 w-[400px] h-[400px] bg-rose-400/20 rounded-full blur-[100px] animate-blob animation-delay-2000 mix-blend-screen"></div>
+        <div className="absolute -bottom-[10%] left-1/3 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen"></div>
       </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-8 text-center relative z-10">
@@ -43,14 +43,14 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
           }}
         >
           Transforme lembranças{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-amber-400">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-rose-300">
             em homenagens.
           </span>
         </h1>
 
         {/* Subtítulo */}
         <p
-          className="max-w-xl mx-auto text-slate-400 mb-8 animate-slide-up leading-relaxed"
+          className="max-w-xl mx-auto text-indigo-200/70 mb-8 animate-slide-up leading-relaxed"
           style={{ animationDelay: '0.1s', fontSize: 'clamp(1rem, 2.5vw, 1.125rem)' }}
         >
           Mantenha as histórias de quem você ama vivas, acessível a qualquer momento, de qualquer lugar.
@@ -71,7 +71,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
 
           <button
             onClick={onViewDemo}
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:border-slate-600 text-lg px-8 py-4 rounded-full font-bold transition-all w-full sm:w-auto justify-center hover:text-white shadow-lg shadow-black/20"
+            className="flex items-center gap-2 bg-indigo-900/60 hover:bg-indigo-800/70 text-indigo-200 border border-indigo-700/50 hover:border-indigo-600/50 text-lg px-8 py-4 rounded-full font-bold transition-all w-full sm:w-auto justify-center hover:text-white shadow-lg shadow-black/20"
           >
             <PlayCircle size={20} />
             Ver Demonstração
