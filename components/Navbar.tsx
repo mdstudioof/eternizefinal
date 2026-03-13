@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Menu, X, QrCode, LogOut, User, Loader2, LayoutDashboard, Shield } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useSiteConfig } from '../context/SiteConfigContext';
 
 interface NavbarProps {
   onOpenCreateModal: () => void;
@@ -22,6 +23,7 @@ const Navbar: React.FC<NavbarProps> = ({
   onLogout
 }) => {
   const { user, isAuthenticated, isAdmin, logout, isLoading } = useAuth();
+  const { config } = useSiteConfig();
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -37,9 +39,13 @@ const Navbar: React.FC<NavbarProps> = ({
             onClick={onLogoClick}
             className="flex-shrink-0 flex items-center gap-2 cursor-pointer"
           >
-            <div className="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white">
-              <QrCode size={24} />
-            </div>
+            {config.logo_url ? (
+              <img src={config.logo_url} alt="Logo" className="h-10 object-contain" />
+            ) : (
+              <div className="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white">
+                <QrCode size={24} />
+              </div>
+            )}
             <span className="text-2xl font-bold text-slate-900 tracking-tight">EternizeQR</span>
           </div>
 

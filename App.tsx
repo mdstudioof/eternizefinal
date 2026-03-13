@@ -13,6 +13,7 @@ import ExplorePage from './components/ExplorePage';
 import LoginModal from './components/LoginModal';
 import AdminDashboard from './components/AdminDashboard';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { SiteConfigProvider } from './context/SiteConfigContext';
 
 type AppView = 'home' | 'create' | 'dashboard' | 'view_memorial' | 'edit_memorial' | 'explore' | 'admin';
 
@@ -221,7 +222,9 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <AppContent />
+      <SiteConfigProvider>
+        <AppContent />
+      </SiteConfigProvider>
     </AuthProvider>
   );
 };

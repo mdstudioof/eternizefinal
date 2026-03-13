@@ -13,9 +13,11 @@ import {
   Eye,
   MoreVertical,
   Filter,
-  ArrowUpRight
+  ArrowUpRight,
+  Palette
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import SiteCustomizer from './SiteCustomizer';
 
 interface AdminDashboardProps {
   onLogout: () => void;
@@ -28,6 +30,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onNavigateHom
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState<'all' | 'active' | 'pending'>('all');
+  const [activeTab, setActiveTab] = useState<'memorials' | 'customize'>('memorials');
 
   useEffect(() => {
     fetchMemorials();
@@ -88,9 +91,27 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onNavigateHom
         </div>
         
         <nav className="flex-1 px-4 py-6 space-y-2">
-          <button className="w-full flex items-center gap-3 px-4 py-3 bg-brand-600/10 text-brand-400 rounded-xl font-medium border border-brand-500/20">
+          <button 
+            onClick={() => setActiveTab('memorials')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium border transition-colors ${
+              activeTab === 'memorials' 
+                ? 'bg-brand-600/10 text-brand-400 border-brand-500/20' 
+                : 'text-slate-400 hover:bg-slate-800 hover:text-white border-transparent'
+            }`}
+          >
             <Users size={20} />
             Gestão de Memoriais
+          </button>
+          <button 
+            onClick={() => setActiveTab('customize')}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium border transition-colors ${
+              activeTab === 'customize' 
+                ? 'bg-brand-600/10 text-brand-400 border-brand-500/20' 
+                : 'text-slate-400 hover:bg-slate-800 hover:text-white border-transparent'
+            }`}
+          >
+            <Palette size={20} />
+            Personalizar Site
           </button>
           <button onClick={onNavigateHome} className="w-full flex items-center gap-3 px-4 py-3 text-slate-400 hover:bg-slate-800 hover:text-white rounded-xl transition-all font-medium">
             <Eye size={20} />
@@ -128,6 +149,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onNavigateHom
         </header>
 
         <div className="flex-1 overflow-auto p-4 md:p-8">
+          
+          {activeTab === 'customize' ? (
+            <SiteCustomizer />
+          ) : (
+            <>
           
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -297,6 +323,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout, onNavigateHom
               </div>
             </div>
           </div>
+
+            </>
+          )}
 
         </div>
       </main>

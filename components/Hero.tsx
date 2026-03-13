@@ -1,5 +1,6 @@
 import React from 'react';
-import { PlayCircle, QrCode } from 'lucide-react';
+import { QrCode, PlayCircle } from 'lucide-react';
+import { useSiteConfig } from '../context/SiteConfigContext';
 
 interface HeroProps {
   onOpenCreateModal: () => void;
@@ -8,6 +9,7 @@ interface HeroProps {
 }
 
 const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onViewDemo }) => {
+  const { config } = useSiteConfig();
   return (
     <section className="relative overflow-hidden pt-20 pb-24 lg:pt-36 lg:pb-32 bg-indigo-950">
 
@@ -42,10 +44,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
             lineHeight: '1.18',
           }}
         >
-          Transforme lembranças{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-300 to-rose-300">
-            em homenagens.
-          </span>
+          {config.hero_title}
         </h1>
 
         {/* Subtítulo */}
@@ -53,7 +52,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
           className="max-w-xl mx-auto text-indigo-200/70 mb-8 animate-slide-up leading-relaxed"
           style={{ animationDelay: '0.1s', fontSize: 'clamp(1rem, 2.5vw, 1.125rem)' }}
         >
-          Mantenha as histórias de quem você ama vivas, acessível a qualquer momento, de qualquer lugar.
+          {config.hero_subtitle}
         </p>
 
         {/* CTAs */}
