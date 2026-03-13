@@ -9,6 +9,8 @@ export interface HeroSection {
   bg_color: string;
   bg_image_url: string | null;
   bg_image_opacity: number;
+  title_color: string;
+  subtitle_color: string;
 }
 
 export interface ShowcaseSection {
@@ -17,18 +19,23 @@ export interface ShowcaseSection {
   description: string;
   cta_text: string;
   bg_color: string;
+  title_color: string;
+  subtitle_color: string;
 }
 
 export interface FeaturesSection {
   title: string;
   subtitle: string;
   bg_color: string;
+  title_color: string;
+  subtitle_color: string;
 }
 
 export interface TestimonialsSection {
   badge: string;
   title: string;
   bg_color: string;
+  title_color: string;
 }
 
 export interface ValuePropositionSection {
@@ -40,6 +47,8 @@ export interface ValuePropositionSection {
   payment_label: string;
   offer_badge: string;
   bg_color: string;
+  title_color: string;
+  subtitle_color: string;
 }
 
 export interface SiteSections {
@@ -71,6 +80,8 @@ const DEFAULT_SECTIONS: SiteSections = {
     bg_color: '#1e1b4b',
     bg_image_url: null,
     bg_image_opacity: 20,
+    title_color: '#ffffff',
+    subtitle_color: '#c7d2fe',
   },
   showcase: {
     badge: 'MEMORIAL DIGITAL',
@@ -78,16 +89,21 @@ const DEFAULT_SECTIONS: SiteSections = {
     description: '* Essas páginas podem incluir fotos, vídeos, textos e histórias, proporcionando um espaço onde as memórias podem ser acessadas e compartilhadas facilmente por familiares e amigos a qualquer momento com acesso à internet',
     cta_text: 'Saiba mais',
     bg_color: '#ffffff',
+    title_color: '#0f172a',
+    subtitle_color: '#475569',
   },
   features: {
     title: 'Recursos Especiais',
     subtitle: 'Tudo que você precisa para criar um memorial digital completo, emocionante e duradouro.',
     bg_color: '#f8fafc',
+    title_color: '#0f172a',
+    subtitle_color: '#475569',
   },
   testimonials: {
     badge: 'Depoimentos',
     title: 'Quem já eternizou uma memória especial',
     bg_color: '#1e1b4b',
+    title_color: '#ffffff',
   },
   value_proposition: {
     badge: 'Acessível em qualquer lugar do mundo',
@@ -98,6 +114,8 @@ const DEFAULT_SECTIONS: SiteSections = {
     payment_label: 'Pagamento Único',
     offer_badge: 'OFERTA ESPECIAL',
     bg_color: '#1e1b4b',
+    title_color: '#ffffff',
+    subtitle_color: '#c7d2fe',
   },
 };
 

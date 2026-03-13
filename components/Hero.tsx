@@ -45,6 +45,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
           style={{
             fontSize: 'clamp(2.75rem, 8vw, 4.5rem)',
             lineHeight: '1.18',
+            color: config.sections.hero.title_color,
           }}
         >
           {config.sections.hero.title}
@@ -52,8 +53,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
 
         {/* Subtítulo */}
         <p
-          className="max-w-xl mx-auto text-indigo-200/70 mb-8 animate-slide-up leading-relaxed"
-          style={{ animationDelay: '0.1s', fontSize: 'clamp(1rem, 2.5vw, 1.125rem)' }}
+          className="max-w-xl mx-auto mb-8 animate-slide-up leading-relaxed"
+          style={{ animationDelay: '0.1s', fontSize: 'clamp(1rem, 2.5vw, 1.125rem)', color: config.sections.hero.subtitle_color }}
         >
           {config.sections.hero.subtitle}
         </p>

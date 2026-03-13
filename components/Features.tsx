@@ -57,10 +57,10 @@ const Features: React.FC = () => {
 
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 tracking-tight" style={{ color: config.sections.features.title_color }}>
             {config.sections.features.title}
           </h2>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+          <p className="text-lg max-w-2xl mx-auto" style={{ color: config.sections.features.subtitle_color }}>
             {config.sections.features.subtitle}
           </p>
         </div>

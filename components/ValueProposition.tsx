@@ -28,13 +28,13 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
             </div>
 
             <h2
-              className="font-bold text-white mb-6 leading-tight"
-              style={{ fontSize: 'clamp(2.25rem, 7vw, 3rem)' }}
+              className="font-bold mb-6 leading-tight"
+              style={{ fontSize: 'clamp(2.25rem, 7vw, 3rem)', color: vp.title_color }}
             >
               {vp.title}
             </h2>
 
-            <p className="text-lg text-indigo-200/60 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <p className="text-lg mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0" style={{ color: vp.subtitle_color }}>
               {vp.description}
             </p>
 

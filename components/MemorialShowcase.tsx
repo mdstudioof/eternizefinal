@@ -31,16 +31,17 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                         </span>
 
                         <h2
-                            className="font-extrabold text-slate-900 tracking-tight mb-6"
+                            className="font-extrabold tracking-tight mb-6"
                             style={{
                                 fontSize: 'clamp(2rem, 5vw, 3.5rem)',
                                 lineHeight: '1.15',
+                                color: config.sections.showcase.title_color,
                             }}
                         >
                             {config.sections.showcase.title}
                         </h2>
 
-                        <p className="text-slate-600 text-lg leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0">
+                        <p className="text-lg leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0" style={{ color: config.sections.showcase.subtitle_color }}>
                             {config.sections.showcase.description}
                         </p>
 

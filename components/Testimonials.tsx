@@ -119,7 +119,7 @@ const Testimonials: React.FC = () => {
                     <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-brand-300 text-xs font-bold uppercase tracking-widest mb-4 border border-white/10 backdrop-blur-sm">
                         {config.sections.testimonials.badge}
                     </span>
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                    <h2 className="text-3xl md:text-4xl font-extrabold leading-tight" style={{ color: config.sections.testimonials.title_color }}>
                         {config.sections.testimonials.title}
                     </h2>
                 </div>
