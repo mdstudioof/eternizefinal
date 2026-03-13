@@ -1,3 +1,4 @@
+// SiteCustomizer v2 - Tabbed Interface - 2026-03-13
 import React, { useState, useEffect, useRef } from 'react';
 import { updateSiteConfig, uploadLogo, getDefaultSections, SiteSections } from '../services/siteConfigService';
 import { useSiteConfig } from '../context/SiteConfigContext';
