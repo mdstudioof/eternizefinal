@@ -11,7 +11,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onViewDemo }) => {
   const { config } = useSiteConfig();
   return (
-    <section className="relative overflow-hidden pt-20 pb-24 lg:pt-36 lg:pb-32" style={{ backgroundColor: 'var(--color-dark-bg)' }}>
+    <section className="relative overflow-hidden min-h-screen lg:min-h-0 pt-20 pb-24 lg:pt-36 lg:pb-32 flex items-center" style={{ backgroundColor: 'var(--color-dark-bg)' }}>
 
       {/* Background Image with Gradient Overlay */}
       <div className="absolute inset-0 w-full h-full">
@@ -30,7 +30,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
         <div className="absolute -bottom-[10%] left-1/3 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-[120px] animate-blob animation-delay-4000 mix-blend-screen"></div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-8 text-center relative z-10">
+      <div className="max-w-4xl mx-auto px-4 sm:px-8 text-center relative z-10 w-full">
 
         {/*
           Título em 3 linhas — fluid typography via clamp.
