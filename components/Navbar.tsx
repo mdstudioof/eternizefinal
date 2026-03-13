@@ -30,9 +30,9 @@ const Navbar: React.FC<NavbarProps> = ({
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-100">
+    <nav className="sticky top-0 z-50 w-full md:bg-white/80 md:backdrop-blur-md md:border-b md:border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-14 md:h-20">
 
           {/* Logo — hidden on mobile, visible on desktop */}
           <div
@@ -139,7 +139,7 @@ const Navbar: React.FC<NavbarProps> = ({
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-slate-500 hover:text-slate-700 p-2 transition-colors"
+              className="text-white bg-black/30 backdrop-blur-sm hover:bg-black/50 p-2.5 rounded-xl transition-colors"
             >
               {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
