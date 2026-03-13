@@ -110,7 +110,32 @@ export const SiteConfigProvider: React.FC<{ children: React.ReactNode }> = ({ ch
 
   return (
     <SiteConfigContext.Provider value={{ config, loading, refreshConfig }}>
-      {children}
+      {loading ? (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: '#0f0a2a',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999,
+        }}>
+          <div style={{
+            width: 40,
+            height: 40,
+            border: '3px solid rgba(255,255,255,0.15)',
+            borderTopColor: '#fff',
+            borderRadius: '50%',
+            animation: 'spin 0.8s linear infinite',
+          }} />
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+      ) : (
+        <div style={{ animation: 'fadeIn 0.4s ease-out' }}>
+          <style>{`@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }`}</style>
+          {children}
+        </div>
+      )}
     </SiteConfigContext.Provider>
   );
 };
