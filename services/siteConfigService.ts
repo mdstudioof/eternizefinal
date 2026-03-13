@@ -6,6 +6,7 @@ export interface HeroSection {
   subtitle: string;
   cta_primary: string;
   cta_secondary: string;
+  bg_color: string;
 }
 
 export interface ShowcaseSection {
@@ -13,16 +14,19 @@ export interface ShowcaseSection {
   title: string;
   description: string;
   cta_text: string;
+  bg_color: string;
 }
 
 export interface FeaturesSection {
   title: string;
   subtitle: string;
+  bg_color: string;
 }
 
 export interface TestimonialsSection {
   badge: string;
   title: string;
+  bg_color: string;
 }
 
 export interface ValuePropositionSection {
@@ -33,6 +37,7 @@ export interface ValuePropositionSection {
   cta_text: string;
   payment_label: string;
   offer_badge: string;
+  bg_color: string;
 }
 
 export interface SiteSections {
@@ -61,20 +66,24 @@ const DEFAULT_SECTIONS: SiteSections = {
     subtitle: 'Mantenha as histórias de quem você ama vivas, acessível a qualquer momento, de qualquer lugar.',
     cta_primary: 'Começar Agora',
     cta_secondary: 'Ver Demonstração',
+    bg_color: '#1e1b4b',
   },
   showcase: {
     badge: 'MEMORIAL DIGITAL',
     title: 'MEMORIAL DIGITAL',
     description: '* Essas páginas podem incluir fotos, vídeos, textos e histórias, proporcionando um espaço onde as memórias podem ser acessadas e compartilhadas facilmente por familiares e amigos a qualquer momento com acesso à internet',
     cta_text: 'Saiba mais',
+    bg_color: '#ffffff',
   },
   features: {
     title: 'Recursos Especiais',
     subtitle: 'Tudo que você precisa para criar um memorial digital completo, emocionante e duradouro.',
+    bg_color: '#f8fafc',
   },
   testimonials: {
     badge: 'Depoimentos',
     title: 'Quem já eternizou uma memória especial',
+    bg_color: '#1e1b4b',
   },
   value_proposition: {
     badge: 'Acessível em qualquer lugar do mundo',
@@ -84,6 +93,7 @@ const DEFAULT_SECTIONS: SiteSections = {
     cta_text: 'Criar Memorial Eterno',
     payment_label: 'Pagamento Único',
     offer_badge: 'OFERTA ESPECIAL',
+    bg_color: '#1e1b4b',
   },
 };
 

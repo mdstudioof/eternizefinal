@@ -20,7 +20,7 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
     ];
 
     return (
-        <section className="bg-gradient-to-b from-white via-slate-50 to-white py-20 lg:py-28 overflow-hidden">
+        <section className="py-20 lg:py-28 overflow-hidden" style={{ backgroundColor: config.sections.showcase.bg_color }}>
             <div className="max-w-6xl mx-auto px-6 sm:px-8">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 

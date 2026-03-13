@@ -10,7 +10,7 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
   const { config } = useSiteConfig();
   const vp = config.sections.value_proposition;
   return (
-    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'var(--color-dark-bg)' }}>
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: vp.bg_color }}>
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] bg-brand-600/20 rounded-full blur-[120px]"></div>

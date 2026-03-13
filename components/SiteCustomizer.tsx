@@ -231,6 +231,7 @@ const SiteCustomizer: React.FC = () => {
         {activeTab === 'hero' && (
           <div className="space-y-5">
             <h3 className="font-bold text-slate-900 text-lg mb-4">Seção Hero</h3>
+            <ColorField label="Cor de Fundo" value={sections.hero.bg_color} onChange={(v) => updateSection('hero', 'bg_color', v)} hint="Fundo da seção principal" />
             <TextField label="Título Principal" value={sections.hero.title} onChange={(v) => updateSection('hero', 'title', v)} />
             <TextField label="Subtítulo" value={sections.hero.subtitle} onChange={(v) => updateSection('hero', 'subtitle', v)} multiline />
             <TextField label="Botão Primário" value={sections.hero.cta_primary} onChange={(v) => updateSection('hero', 'cta_primary', v)} />
@@ -242,6 +243,7 @@ const SiteCustomizer: React.FC = () => {
         {activeTab === 'showcase' && (
           <div className="space-y-5">
             <h3 className="font-bold text-slate-900 text-lg mb-4">Seção Memorial Showcase</h3>
+            <ColorField label="Cor de Fundo" value={sections.showcase.bg_color} onChange={(v) => updateSection('showcase', 'bg_color', v)} hint="Fundo da seção Showcase" />
             <TextField label="Badge (Tag Superior)" value={sections.showcase.badge} onChange={(v) => updateSection('showcase', 'badge', v)} />
             <TextField label="Título Grande" value={sections.showcase.title} onChange={(v) => updateSection('showcase', 'title', v)} />
             <TextField label="Descrição" value={sections.showcase.description} onChange={(v) => updateSection('showcase', 'description', v)} multiline />
@@ -253,6 +255,7 @@ const SiteCustomizer: React.FC = () => {
         {activeTab === 'features' && (
           <div className="space-y-5">
             <h3 className="font-bold text-slate-900 text-lg mb-4">Seção Recursos</h3>
+            <ColorField label="Cor de Fundo" value={sections.features.bg_color} onChange={(v) => updateSection('features', 'bg_color', v)} hint="Fundo da seção Recursos" />
             <TextField label="Título" value={sections.features.title} onChange={(v) => updateSection('features', 'title', v)} />
             <TextField label="Subtítulo" value={sections.features.subtitle} onChange={(v) => updateSection('features', 'subtitle', v)} multiline />
           </div>
@@ -262,6 +265,7 @@ const SiteCustomizer: React.FC = () => {
         {activeTab === 'testimonials' && (
           <div className="space-y-5">
             <h3 className="font-bold text-slate-900 text-lg mb-4">Seção Depoimentos</h3>
+            <ColorField label="Cor de Fundo" value={sections.testimonials.bg_color} onChange={(v) => updateSection('testimonials', 'bg_color', v)} hint="Fundo da seção Depoimentos" />
             <TextField label="Badge (Tag Superior)" value={sections.testimonials.badge} onChange={(v) => updateSection('testimonials', 'badge', v)} />
             <TextField label="Título" value={sections.testimonials.title} onChange={(v) => updateSection('testimonials', 'title', v)} />
           </div>
@@ -271,6 +275,7 @@ const SiteCustomizer: React.FC = () => {
         {activeTab === 'value_proposition' && (
           <div className="space-y-5">
             <h3 className="font-bold text-slate-900 text-lg mb-4">Seção Oferta / Preço</h3>
+            <ColorField label="Cor de Fundo" value={sections.value_proposition.bg_color} onChange={(v) => updateSection('value_proposition', 'bg_color', v)} hint="Fundo da seção de oferta" />
             <TextField label="Badge Superior" value={sections.value_proposition.badge} onChange={(v) => updateSection('value_proposition', 'badge', v)} />
             <TextField label="Título" value={sections.value_proposition.title} onChange={(v) => updateSection('value_proposition', 'title', v)} />
             <TextField label="Descrição" value={sections.value_proposition.description} onChange={(v) => updateSection('value_proposition', 'description', v)} multiline />

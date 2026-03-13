@@ -45,7 +45,7 @@ const features: FeatureItem[] = [
 const Features: React.FC = () => {
   const { config } = useSiteConfig();
   return (
-    <section className="py-24 bg-slate-50 relative overflow-hidden">
+    <section className="py-24 relative overflow-hidden" style={{ backgroundColor: config.sections.features.bg_color }}>
 
       {/* Decorative Background Blurs */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full overflow-hidden pointer-events-none">

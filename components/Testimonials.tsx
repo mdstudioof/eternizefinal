@@ -105,7 +105,7 @@ const Testimonials: React.FC = () => {
     const t = testimonials[current];
 
     return (
-        <section className="py-20 lg:py-28 relative overflow-hidden" style={{ backgroundColor: 'var(--color-dark-bg)' }}>
+        <section className="py-20 lg:py-28 relative overflow-hidden" style={{ backgroundColor: config.sections.testimonials.bg_color }}>
             {/* Background decoration */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
                 <div className="absolute -top-[20%] -left-[10%] w-[500px] h-[500px] bg-brand-600/10 rounded-full blur-[120px]" />

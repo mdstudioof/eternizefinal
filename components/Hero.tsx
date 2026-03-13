@@ -11,7 +11,7 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onViewDemo }) => {
   const { config } = useSiteConfig();
   return (
-    <section className="relative overflow-hidden min-h-screen lg:min-h-0 pt-20 pb-24 lg:pt-36 lg:pb-32 flex items-center" style={{ backgroundColor: 'var(--color-dark-bg)' }}>
+    <section className="relative overflow-hidden min-h-screen lg:min-h-0 pt-20 pb-24 lg:pt-36 lg:pb-32 flex items-center" style={{ backgroundColor: config.sections.hero.bg_color }}>
 
       {/* Background Image with Gradient Overlay */}
       <div className="absolute inset-0 w-full h-full">
