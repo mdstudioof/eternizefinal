@@ -15,12 +15,15 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
 
       {/* Background Image with Gradient Overlay */}
       <div className="absolute inset-0 w-full h-full">
-        <img
-          src="/hero-bg.png"
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950/80 via-indigo-950/70 to-indigo-950"></div>
+        {config.sections.hero.bg_image_url && (
+          <img
+            src={config.sections.hero.bg_image_url}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ opacity: (config.sections.hero.bg_image_opacity || 20) / 100 }}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
       </div>
 
       {/* Background Decor */}

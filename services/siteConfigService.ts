@@ -7,6 +7,8 @@ export interface HeroSection {
   cta_primary: string;
   cta_secondary: string;
   bg_color: string;
+  bg_image_url: string | null;
+  bg_image_opacity: number;
 }
 
 export interface ShowcaseSection {
@@ -67,6 +69,8 @@ const DEFAULT_SECTIONS: SiteSections = {
     cta_primary: 'Começar Agora',
     cta_secondary: 'Ver Demonstração',
     bg_color: '#1e1b4b',
+    bg_image_url: null,
+    bg_image_opacity: 20,
   },
   showcase: {
     badge: 'MEMORIAL DIGITAL',

@@ -32,10 +32,13 @@ const SiteCustomizer: React.FC = () => {
   const [sections, setSections] = useState<SiteSections>(config.sections || defaults);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [logoPreview, setLogoPreview] = useState<string | null>(config.logo_url);
+  const [heroBgFile, setHeroBgFile] = useState<File | null>(null);
+  const [heroBgPreview, setHeroBgPreview] = useState<string | null>(config.sections?.hero?.bg_image_url || null);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [activeTab, setActiveTab] = useState<TabKey>('cores');
   const logoInputRef = useRef<HTMLInputElement>(null);
+  const heroBgInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setColors({
@@ -45,6 +48,7 @@ const SiteCustomizer: React.FC = () => {
     });
     setSections(config.sections || defaults);
     setLogoPreview(config.logo_url);
+    setHeroBgPreview(config.sections?.hero?.bg_image_url || null);
   }, [config]);
 
   const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,6 +57,20 @@ const SiteCustomizer: React.FC = () => {
       setLogoFile(file);
       setLogoPreview(URL.createObjectURL(file));
     }
+  };
+
+  const handleHeroBgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setHeroBgFile(file);
+      setHeroBgPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const removeHeroBg = () => {
+    setHeroBgFile(null);
+    setHeroBgPreview(null);
+    updateSection('hero', 'bg_image_url', '' as any);
   };
 
   const updateSection = <K extends keyof SiteSections>(
@@ -76,12 +94,29 @@ const SiteCustomizer: React.FC = () => {
         if (url) logoUrl = url;
       }
 
+      // Upload hero bg image if changed
+      let updatedSections = { ...sections };
+      if (heroBgFile) {
+        const url = await uploadLogo(heroBgFile);
+        if (url) {
+          updatedSections = {
+            ...updatedSections,
+            hero: { ...updatedSections.hero, bg_image_url: url },
+          };
+        }
+      } else if (heroBgPreview === null) {
+        updatedSections = {
+          ...updatedSections,
+          hero: { ...updatedSections.hero, bg_image_url: null as any },
+        };
+      }
+
       const { success } = await updateSiteConfig({
         ...colors,
         logo_url: logoUrl,
-        hero_title: sections.hero.title,
-        hero_subtitle: sections.hero.subtitle,
-        sections,
+        hero_title: updatedSections.hero.title,
+        hero_subtitle: updatedSections.hero.subtitle,
+        sections: updatedSections,
       });
 
       if (success) {
@@ -108,6 +143,8 @@ const SiteCustomizer: React.FC = () => {
     setSections(config.sections || defaults);
     setLogoFile(null);
     setLogoPreview(config.logo_url);
+    setHeroBgFile(null);
+    setHeroBgPreview(config.sections?.hero?.bg_image_url || null);
   };
 
   // Reusable field component
@@ -232,6 +269,56 @@ const SiteCustomizer: React.FC = () => {
           <div className="space-y-5">
             <h3 className="font-bold text-slate-900 text-lg mb-4">Seção Hero</h3>
             <ColorField label="Cor de Fundo" value={sections.hero.bg_color} onChange={(v) => updateSection('hero', 'bg_color', v)} hint="Fundo da seção principal" />
+
+            {/* Hero Background Image */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Imagem de Fundo</label>
+              <div className="flex items-center gap-4">
+                {heroBgPreview ? (
+                  <div className="w-24 h-16 rounded-xl border-2 border-slate-200 overflow-hidden bg-slate-100">
+                    <img src={heroBgPreview} alt="Hero BG" className="w-full h-full object-cover" />
+                  </div>
+                ) : (
+                  <div className="w-24 h-16 rounded-xl border-2 border-dashed border-slate-300 flex items-center justify-center text-slate-400 text-xs">
+                    Sem imagem
+                  </div>
+                )}
+                <div className="flex gap-2">
+                  <button onClick={() => heroBgInputRef.current?.click()} className="flex items-center gap-2 px-3 py-2 text-sm font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition-colors">
+                    <Upload size={14} /> {heroBgPreview ? 'Trocar' : 'Upload'}
+                  </button>
+                  {heroBgPreview && (
+                    <button onClick={removeHeroBg} className="flex items-center gap-2 px-3 py-2 text-sm font-medium bg-red-50 hover:bg-red-100 text-red-600 rounded-xl transition-colors">
+                      Remover
+                    </button>
+                  )}
+                </div>
+                <input ref={heroBgInputRef} type="file" accept="image/*" onChange={handleHeroBgChange} className="hidden" />
+              </div>
+              <p className="text-xs text-slate-400 mt-1">Sem imagem = apenas a cor de fundo. Com imagem = ela aparece por trás com a opacidade abaixo.</p>
+            </div>
+
+            {/* Opacity Slider */}
+            {(heroBgPreview || sections.hero.bg_image_url) && (
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Opacidade da Imagem: {sections.hero.bg_image_opacity}%
+                </label>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={sections.hero.bg_image_opacity}
+                  onChange={(e) => updateSection('hero', 'bg_image_opacity', Number(e.target.value) as any)}
+                  className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-brand-600"
+                />
+                <div className="flex justify-between text-xs text-slate-400 mt-1">
+                  <span>0% (invisível)</span>
+                  <span>100% (totalmente visível)</span>
+                </div>
+              </div>
+            )}
+
             <TextField label="Título Principal" value={sections.hero.title} onChange={(v) => updateSection('hero', 'title', v)} />
             <TextField label="Subtítulo" value={sections.hero.subtitle} onChange={(v) => updateSection('hero', 'subtitle', v)} multiline />
             <TextField label="Botão Primário" value={sections.hero.cta_primary} onChange={(v) => updateSection('hero', 'cta_primary', v)} />
