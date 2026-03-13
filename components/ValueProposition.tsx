@@ -1,11 +1,14 @@
 import React from 'react';
 import { Check, Globe, Infinity, ShieldCheck, Sparkles } from 'lucide-react';
+import { useSiteConfig } from '../context/SiteConfigContext';
 
 interface ValuePropositionProps {
   onStartCreate: () => void;
 }
 
 const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) => {
+  const { config } = useSiteConfig();
+  const vp = config.sections.value_proposition;
   return (
     <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'var(--color-dark-bg)' }}>
       {/* Background Decor */}
@@ -21,22 +24,18 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
           <div className="flex-1 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-900/50 border border-brand-700/50 text-brand-300 mb-6 backdrop-blur-sm">
               <Globe size={16} />
-              <span className="text-sm font-semibold tracking-wide">Acessível em qualquer lugar do mundo</span>
+              <span className="text-sm font-semibold tracking-wide">{vp.badge}</span>
             </div>
 
             <h2
               className="font-bold text-white mb-6 leading-tight"
               style={{ fontSize: 'clamp(2.25rem, 7vw, 3rem)' }}
             >
-              Uma homenagem eterna,{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-rose-300">
-                ao alcance de todos.
-              </span>
+              {vp.title}
             </h2>
 
             <p className="text-lg text-indigo-200/60 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Crie um espaço sagrado digital que preserva a história do seu ente querido para sempre.
-              Sem mensalidades, sem custos escondidos. Apenas uma taxa única para garantir que as memórias nunca se apaguem.
+              {vp.description}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 text-left">
@@ -65,16 +64,16 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
 
               <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gradient-to-r from-brand-600 to-rose-400 text-white px-6 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2 whitespace-nowrap">
                 <Sparkles size={16} className="fill-white" />
-                OFERTA ESPECIAL
+                {vp.offer_badge}
               </div>
 
               <div className="mb-2 text-slate-500 font-semibold uppercase tracking-wider text-sm mt-4">
-                Pagamento Único
+                {vp.payment_label}
               </div>
 
               <div className="flex items-end justify-center gap-1 mb-6 text-slate-900">
                 <span className="text-3xl font-bold align-top mt-2">R$</span>
-                <span className="text-7xl font-extrabold tracking-tighter">59,90</span>
+                <span className="text-7xl font-extrabold tracking-tighter">{vp.price}</span>
               </div>
 
               <p className="text-slate-500 text-sm mb-8 px-4 leading-snug">
@@ -86,7 +85,7 @@ const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) =>
                 className="w-full bg-slate-900 hover:bg-slate-800 text-white text-lg font-bold py-4 rounded-xl shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
               >
                 <Infinity size={20} />
-                Criar Memorial Eterno
+                {vp.cta_text}
               </button>
 
               <div className="mt-6 flex items-center justify-center gap-2 text-xs text-slate-400">

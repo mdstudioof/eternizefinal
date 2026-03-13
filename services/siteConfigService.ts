@@ -1,5 +1,48 @@
 import { supabase } from './supabaseClient';
 
+// --- Section Types ---
+export interface HeroSection {
+  title: string;
+  subtitle: string;
+  cta_primary: string;
+  cta_secondary: string;
+}
+
+export interface ShowcaseSection {
+  badge: string;
+  title: string;
+  description: string;
+  cta_text: string;
+}
+
+export interface FeaturesSection {
+  title: string;
+  subtitle: string;
+}
+
+export interface TestimonialsSection {
+  badge: string;
+  title: string;
+}
+
+export interface ValuePropositionSection {
+  badge: string;
+  title: string;
+  description: string;
+  price: string;
+  cta_text: string;
+  payment_label: string;
+  offer_badge: string;
+}
+
+export interface SiteSections {
+  hero: HeroSection;
+  showcase: ShowcaseSection;
+  features: FeaturesSection;
+  testimonials: TestimonialsSection;
+  value_proposition: ValuePropositionSection;
+}
+
 export interface SiteConfig {
   id: string;
   primary_color: string;
@@ -8,8 +51,41 @@ export interface SiteConfig {
   hero_title: string;
   hero_subtitle: string;
   logo_url: string | null;
+  sections: SiteSections;
   updated_at: string;
 }
+
+const DEFAULT_SECTIONS: SiteSections = {
+  hero: {
+    title: 'Transforme lembranças em homenagens.',
+    subtitle: 'Mantenha as histórias de quem você ama vivas, acessível a qualquer momento, de qualquer lugar.',
+    cta_primary: 'Começar Agora',
+    cta_secondary: 'Ver Demonstração',
+  },
+  showcase: {
+    badge: 'MEMORIAL DIGITAL',
+    title: 'MEMORIAL DIGITAL',
+    description: '* Essas páginas podem incluir fotos, vídeos, textos e histórias, proporcionando um espaço onde as memórias podem ser acessadas e compartilhadas facilmente por familiares e amigos a qualquer momento com acesso à internet',
+    cta_text: 'Saiba mais',
+  },
+  features: {
+    title: 'Recursos Especiais',
+    subtitle: 'Tudo que você precisa para criar um memorial digital completo, emocionante e duradouro.',
+  },
+  testimonials: {
+    badge: 'Depoimentos',
+    title: 'Quem já eternizou uma memória especial',
+  },
+  value_proposition: {
+    badge: 'Acessível em qualquer lugar do mundo',
+    title: 'Uma homenagem eterna, ao alcance de todos.',
+    description: 'Crie um espaço sagrado digital que preserva a história do seu ente querido para sempre. Sem mensalidades, sem custos escondidos. Apenas uma taxa única para garantir que as memórias nunca se apaguem.',
+    price: '59,90',
+    cta_text: 'Criar Memorial Eterno',
+    payment_label: 'Pagamento Único',
+    offer_badge: 'OFERTA ESPECIAL',
+  },
+};
 
 const DEFAULT_CONFIG: SiteConfig = {
   id: '00000000-0000-0000-0000-000000000001',
@@ -19,8 +95,11 @@ const DEFAULT_CONFIG: SiteConfig = {
   hero_title: 'Transforme lembranças em homenagens.',
   hero_subtitle: 'Mantenha as histórias de quem você ama vivas, acessível a qualquer momento, de qualquer lugar.',
   logo_url: null,
+  sections: DEFAULT_SECTIONS,
   updated_at: new Date().toISOString(),
 };
+
+export const getDefaultSections = () => DEFAULT_SECTIONS;
 
 export const getSiteConfig = async (): Promise<SiteConfig> => {
   try {
@@ -34,7 +113,18 @@ export const getSiteConfig = async (): Promise<SiteConfig> => {
       return DEFAULT_CONFIG;
     }
 
-    return data as SiteConfig;
+    // Merge with defaults to handle missing section keys
+    const sections = {
+      ...DEFAULT_SECTIONS,
+      ...(data.sections || {}),
+      hero: { ...DEFAULT_SECTIONS.hero, ...(data.sections?.hero || {}) },
+      showcase: { ...DEFAULT_SECTIONS.showcase, ...(data.sections?.showcase || {}) },
+      features: { ...DEFAULT_SECTIONS.features, ...(data.sections?.features || {}) },
+      testimonials: { ...DEFAULT_SECTIONS.testimonials, ...(data.sections?.testimonials || {}) },
+      value_proposition: { ...DEFAULT_SECTIONS.value_proposition, ...(data.sections?.value_proposition || {}) },
+    };
+
+    return { ...data, sections } as SiteConfig;
   } catch {
     return DEFAULT_CONFIG;
   }

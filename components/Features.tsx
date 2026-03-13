@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSiteConfig } from '../context/SiteConfigContext';
 import { QrCode, Cloud, Image, Video, Shield, Heart } from 'lucide-react';
 import { FeatureItem } from '../types';
 
@@ -42,6 +43,7 @@ const features: FeatureItem[] = [
 ];
 
 const Features: React.FC = () => {
+  const { config } = useSiteConfig();
   return (
     <section className="py-24 bg-slate-50 relative overflow-hidden">
 
@@ -56,10 +58,10 @@ const Features: React.FC = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">
-            Recursos <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-rose-400">Especiais</span>
+            {config.sections.features.title}
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Tudo que você precisa para criar um memorial digital completo, emocionante e duradouro.
+            {config.sections.features.subtitle}
           </p>
         </div>
 

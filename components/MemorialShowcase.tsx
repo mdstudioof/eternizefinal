@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ArrowRight, Calendar, Image as ImageIcon, Video, Clock, Heart } from 'lucide-react';
+import { useSiteConfig } from '../context/SiteConfigContext';
 
 interface MemorialShowcaseProps {
     onStartCreate: () => void;
@@ -8,6 +9,7 @@ interface MemorialShowcaseProps {
 type MockTab = 'timeline' | 'biography' | 'media' | 'tributes';
 
 const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) => {
+    const { config } = useSiteConfig();
     const [activeTab, setActiveTab] = useState<MockTab>('media');
 
     const tabs: { key: MockTab; label: string }[] = [
@@ -25,7 +27,7 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                     {/* Left: Text Content */}
                     <div className="flex-1 text-center lg:text-left">
                         <span className="inline-block px-4 py-1.5 rounded-full bg-brand-50 text-brand-600 text-xs font-bold uppercase tracking-widest mb-6 border border-brand-100">
-                            Memorial Digital
+                            {config.sections.showcase.badge}
                         </span>
 
                         <h2
@@ -35,18 +37,18 @@ const MemorialShowcase: React.FC<MemorialShowcaseProps> = ({ onStartCreate }) =>
                                 lineHeight: '1.15',
                             }}
                         >
-                            MEMORIAL<br />DIGITAL
+                            {config.sections.showcase.title}
                         </h2>
 
                         <p className="text-slate-600 text-lg leading-relaxed mb-8 max-w-lg mx-auto lg:mx-0">
-                            * Essas páginas podem incluir fotos, vídeos, textos e histórias, proporcionando um espaço onde as memórias podem ser acessadas e compartilhadas facilmente por familiares e amigos a qualquer momento com acesso à internet
+                            {config.sections.showcase.description}
                         </p>
 
                         <button
                             onClick={onStartCreate}
                             className="inline-flex items-center gap-3 border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 group"
                         >
-                            Saiba mais
+                            {config.sections.showcase.cta_text}
                             <ArrowRight size={20} className="transition-transform group-hover:translate-x-1" />
                         </button>
                     </div>

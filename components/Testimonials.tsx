@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { useSiteConfig } from '../context/SiteConfigContext';
 
 const testimonials = [
     {
@@ -42,6 +43,7 @@ const testimonials = [
 const INTERVAL = 7000;
 
 const Testimonials: React.FC = () => {
+    const { config } = useSiteConfig();
     const [current, setCurrent] = useState(0);
     const [fade, setFade] = useState(true);
     const [progress, setProgress] = useState(0);
@@ -115,10 +117,10 @@ const Testimonials: React.FC = () => {
                 {/* Header */}
                 <div className="text-center mb-14">
                     <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-brand-300 text-xs font-bold uppercase tracking-widest mb-4 border border-white/10 backdrop-blur-sm">
-                        Depoimentos
+                        {config.sections.testimonials.badge}
                     </span>
                     <h2 className="text-3xl md:text-4xl font-extrabold text-white leading-tight">
-                        Quem já eternizou<br className="hidden sm:block" /> uma memória especial
+                        {config.sections.testimonials.title}
                     </h2>
                 </div>
 

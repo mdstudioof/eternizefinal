@@ -44,7 +44,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
             lineHeight: '1.18',
           }}
         >
-          {config.hero_title}
+          {config.sections.hero.title}
         </h1>
 
         {/* Subtítulo */}
@@ -52,7 +52,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
           className="max-w-xl mx-auto text-indigo-200/70 mb-8 animate-slide-up leading-relaxed"
           style={{ animationDelay: '0.1s', fontSize: 'clamp(1rem, 2.5vw, 1.125rem)' }}
         >
-          {config.hero_subtitle}
+          {config.sections.hero.subtitle}
         </p>
 
         {/* CTAs */}
@@ -65,7 +65,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
             className="flex items-center gap-2 bg-brand-600 hover:bg-brand-500 text-white text-lg px-8 py-4 rounded-full font-bold transition-all shadow-xl shadow-brand-900/50 hover:shadow-brand-600/40 transform hover:-translate-y-1 w-full sm:w-auto justify-center"
           >
             <QrCode size={20} />
-            Começar Agora
+            {config.sections.hero.cta_primary}
           </button>
 
           <button
@@ -73,7 +73,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenCreateModal, onOpenLoginModal, onView
             className="flex items-center gap-2 bg-indigo-900/60 hover:bg-indigo-800/70 text-indigo-200 border border-indigo-700/50 hover:border-indigo-600/50 text-lg px-8 py-4 rounded-full font-bold transition-all w-full sm:w-auto justify-center hover:text-white shadow-lg shadow-black/20"
           >
             <PlayCircle size={20} />
-            Ver Demonstração
+            {config.sections.hero.cta_secondary}
           </button>
         </div>
 
