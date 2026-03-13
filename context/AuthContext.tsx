@@ -22,6 +22,7 @@ interface AuthContextType {
   isAdmin: boolean;
   loginWithEmail: (email: string, password: string) => Promise<AuthResponse>;
   registerWithEmail: (email: string, password: string, name: string) => Promise<AuthResponse>;
+  loginWithGoogle: () => Promise<AuthResponse>;
   logout: () => Promise<void>;
   isAuthenticated: boolean;
   clearError: () => void;
@@ -137,6 +138,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const loginWithGoogle = async (): Promise<AuthResponse> => {
+    setError(null);
+    try {
+      const { error: authError } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: window.location.origin,
+        },
+      });
+
+      if (authError) {
+        throw authError;
+      }
+
+      return { success: true };
+    } catch (err: any) {
+      console.error('Error logging in with Google:', err.message);
+      setError('Erro ao entrar com Google. Tente novamente.');
+      return { success: false, error: err };
+    }
+  };
+
   const logout = async () => {
     try {
       await supabase.auth.signOut();
@@ -161,6 +184,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isAdmin: user?.role === 'admin',
       loginWithEmail,
       registerWithEmail,
+      loginWithGoogle,
       logout,
       isAuthenticated: !!user,
       clearError
