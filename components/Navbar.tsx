@@ -34,10 +34,10 @@ const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
 
-          {/* Logo */}
+          {/* Logo — hidden on mobile, visible on desktop */}
           <div
             onClick={onLogoClick}
-            className="flex-shrink-0 flex items-center gap-2 cursor-pointer"
+            className="hidden md:flex flex-shrink-0 items-center gap-2 cursor-pointer"
           >
             {config.logo_url ? (
               <img src={config.logo_url} alt="Logo" className="h-10 object-contain" />
