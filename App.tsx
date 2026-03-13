@@ -190,7 +190,7 @@ const AppContent: React.FC = () => {
 
             <ValueProposition onStartCreate={handleCreateClick} />
 
-            <footer className="bg-slate-900 text-white py-12 border-t border-slate-800">
+            <footer className="text-white py-12 border-t border-slate-800" style={{ backgroundColor: 'var(--color-dark-bg)' }}>
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div className="text-slate-400 text-sm">
                   © 2024 EternizeQR. Todos os direitos reservados.

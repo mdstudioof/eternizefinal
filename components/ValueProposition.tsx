@@ -7,7 +7,7 @@ interface ValuePropositionProps {
 
 const ValueProposition: React.FC<ValuePropositionProps> = ({ onStartCreate }) => {
   return (
-    <section className="relative py-24 bg-indigo-950 overflow-hidden">
+    <section className="relative py-24 overflow-hidden" style={{ backgroundColor: 'var(--color-dark-bg)' }}>
       {/* Background Decor */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] bg-brand-600/20 rounded-full blur-[120px]"></div>

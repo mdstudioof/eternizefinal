@@ -4,6 +4,23 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-brand-50: #f0f9ff;
+  --color-brand-100: #e0f4fe;
+  --color-brand-200: #b9e8fd;
+  --color-brand-300: #A3E4FD;
+  --color-brand-400: #5dc9f5;
+  --color-brand-500: #38b6ed;
+  --color-brand-600: #1a9cd8;
+  --color-brand-700: #1580b8;
+  --color-brand-800: #166896;
+  --color-brand-900: #17567b;
+  --color-dark-bg: #1e1b4b;
+  --color-secondary-200: #fecdd3;
+  --color-secondary-300: #fda4af;
+  --color-secondary-400: #fb7185;
+}
+
 body {
   font-family: 'Inter', sans-serif;
 }
