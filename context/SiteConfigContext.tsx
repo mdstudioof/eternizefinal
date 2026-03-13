@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { getSiteConfig, SiteConfig } from '../services/siteConfigService';
+import { getSiteConfig, SiteConfig, getDefaultSections } from '../services/siteConfigService';
 
 interface SiteConfigContextType {
   config: SiteConfig;
@@ -15,6 +15,7 @@ const DEFAULT_CONFIG: SiteConfig = {
   hero_title: 'Transforme lembranças em homenagens.',
   hero_subtitle: 'Mantenha as histórias de quem você ama vivas, acessível a qualquer momento, de qualquer lugar.',
   logo_url: null,
+  sections: getDefaultSections(),
   updated_at: new Date().toISOString(),
 };
 
